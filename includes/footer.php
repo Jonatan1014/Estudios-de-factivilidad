@@ -1,11 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <script>alert('Este es un mensaje de alerta')</script>
-</body>
-</html>
+<!-- Footer Start -->
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <script>
+                document.write(new Date().getFullYear())
+                </script> © Talleres Unidos Ltda. - Systemas
+            </div>
+            <div class="col-md-6">
+                <div class="text-md-end footer-links d-none d-md-block">
+                    <a href="javascript: void(0);">About</a>
+                    <a href="javascript: void(0);">Support</a>
+                    <a href="javascript: void(0);">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- end Footer -->

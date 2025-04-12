@@ -4,30 +4,45 @@ session_start(); // Iniciar la sesión
 // Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['email'])) {
     // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
-    header('Location: pages-login.php');
+    header('Location: login.php');
     exit();
 }
 
+require('includes/Class-user.php'); // Asegúrate de incluir la clase correcta
+$usuario = new Usuario();
+$usuario = $usuario->datosUser_email($_SESSION['email']); // Obtener los datos de los libros
+if ($usuario["rol"]!="admin" && $usuario["rol"]!="root") {
+    header('Location: index.php');
+    exit();
+
+}
+
+if (empty($_POST['id_estudio'])){
+    header('Location: index.php');
+    exit();
+} 
+require('includes/Class-data.php');
+$libro = new Data();
+$datos = $libro->listarEF_ID($_POST['id_estudio']); // Obtener los datos de un libro específico
+
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
 
 
-<!-- Mirrored from coderthemes.com/hyper_2/saas/pages-starter.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Mar 2025 16:33:13 GMT -->
+<!-- Mirrored from coderthemes.com/hyper_2/saas/pages-starter.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 03 Oct 2024 17:04:15 GMT -->
 
 <head>
     <meta charset="utf-8" />
-    <title>Starter Page | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
+    <title>Details Books</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link rel="shortcut icon" href="assets/images/logo-dark-.png">
 
     <!-- Theme Config Js -->
     <script src="assets/js/hyper-config.js"></script>
@@ -37,7 +52,6 @@ if (!isset($_SESSION['email'])) {
 
     <!-- Icons css -->
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-
 </head>
 
 <body>
@@ -58,13 +72,10 @@ if (!isset($_SESSION['email'])) {
         <!-- Start Page Content here -->
         <!-- ============================================================== -->
 
-
-
-
-
-
         <div class="content-page">
             <div class="content">
+
+                <!-- Start Content-->
                 <div class="container-fluid">
 
                     <!-- start page title -->
@@ -73,38 +84,190 @@ if (!isset($_SESSION['email'])) {
                             <div class="page-title-box">
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <!-- <li class="breadcrumb-item"><a href="#">Hyper</a></li> -->
-                                        <li class="breadcrumb-item active">Estudios de Factivilidad</li>
+                                        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                                        <li class="breadcrumb-item active">Detalles Estudio de Factivilidad</li>
                                     </ol>
                                 </div>
-                                <h4 class="page-title">Estudios de Factivilidad</h4>
+                                <h4 class="page-title">Detalles Estudio de Factivilidad</h4>
+                            </div>
+                            <ul class="nav nav-tabs mb-3">
+                                <li class="nav-item">
+                                    <a href="#profile" data-bs-toggle="tab" aria-expanded="true"
+                                        class="nav-link active">
+                                        <i class="mdi mdi-information-variant d-md-none d-block"></i>
+                                        <span class="d-none d-md-block">Informacion</span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="#settings" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                        <i class="mdi mdi-playlist-edit d-md-none d-block"></i>
+                                        <span class="d-none d-md-block">Exportar Estudio de Factivilidad</span>
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div class="tab-pane" id="home">
+                                    <p>
+
+
+
+                                    </p>
+                                </div>
+                                <div class="tab-pane show active" id="profile">
+                                    <p>
+
+                                    <div class="col-xl-4 col-lg-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <!-- First Column -->
+                                                    <div class="col-md-6">
+                                                        <h5 class="mt-1 mb-1">Cliente:</h5>
+                                                        <h7 class="text-muted"><?php echo $datos['cliente']?></h7>
+
+
+                                                        <h5 class="mb-1">Alcance:</h5>
+                                                        <h7 class="text-muted"><?php echo $datos['alcance']?></h7>
+
+                                                       
+                                                        <h5 class="mb-1">Dimensiones:</h5>
+                                                        <h7 class="text-muted"><?php echo $datos['dimenciones']?>
+                                                        </h7>
+
+                                                        <h5 class="mb-1">Cantidad:</h5>
+                                                        <h7 class="text-muted"><?php echo $datos['cantidad']?>
+                                                        </h7>
+                                                    </div>
+
+                                                    <!-- Second Column -->
+                                                    <div class="col-md-6">
+                                                        <h5 class="mt-1 mb-1">Fecha:</h5>
+                                                        <h7 class="text-muted"><?php var_dump($_POST['id_estudio']); echo $datos['fecha_estudio']?></h7>
+
+                                                        <h5 class="mb-1">Cotizacion:</h5>
+                                                        <h7 class="text-muted"><?php echo $datos['cotizacion']?></h7>
+
+
+                                                        <h5 class="mb-1">Tipo:</h5>
+                                                        <h7 class="text-muted"><?php echo $datos['tipo']?></h7>
+
+                                                        <h5 class="mb-1">Cod. Fabricacion:</h5>
+                                                        <h7 class="text-muted"><?php echo $datos['cod_fabricacion']?></h7>
+
+                                                        <h5 class="mb-1">Doc. Referencia:</h5>
+                                                        <h7 class="text-muted"><?php echo $datos['doc_referencia']?></h7>
+
+                                                        
+                                                    </div>
+                                                </div> <!-- end row -->
+                                            </div> <!-- end card-body -->
+                                        </div> <!-- end card -->
+                                    </div> <!-- end col -->
+                                    </p>
+                                </div>
+                                <div class="tab-pane" id="settings">
+                                    <p>
+
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <form action="action/register_loan.php" method="post">
+                                                <div class="row">
+                                                    <!-- Primera columna -->
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label for="simpleinput" class="form-label">Código
+                                                                estudiante</label>
+                                                            <input type="text" name="cedula" id="simpleinput"
+                                                                class="form-control" required>
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label for="example-date" class="form-label">Fecha de
+                                                                entrega</label>
+                                                            <input class="form-control" id="fecha-entrega" type="date"
+                                                                name="date" value="<?php echo date('Y-m-d'); ?>"
+                                                                readonly>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Segunda columna -->
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label for="example-date" class="form-label">Fecha de
+                                                                devolución</label>
+                                                            <input class="form-control" name="fecha_entrega"
+                                                                id="fecha-devolucion" type="date" required>
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label for="simpleinput" class="form-label">Título del
+                                                                libro</label>
+                                                            <input type="text" id="simpleinput" class="form-control"
+                                                                value="<?php echo $datos['titulo']?>" readonly>
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <input type="hidden" name="idLibro"
+                                                                value="<?php echo $datos['idLibro']?>" id="simpleinput"
+                                                                class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Botón de envío -->
+                                                    <div class="mb-3 text-center">
+                                                        <br><br><br>
+                                                        <button type="submit" class="btn btn-primary">Enviar</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                    // Obtenemos las fechas de entrega y devolución
+                                    const fechaEntregaInput = document.getElementById('fecha-entrega');
+                                    const fechaDevolucionInput = document.getElementById('fecha-devolucion');
+
+                                    // Convertir la fecha actual a un formato válido de input (YYYY-MM-DD)
+                                    const fechaEntrega = new Date(fechaEntregaInput.value);
+
+                                    // Calcular fecha mínima y máxima para la devolución
+                                    const fechaMinimaDevolucion = new Date(fechaEntrega);
+                                    fechaMinimaDevolucion.setDate(fechaMinimaDevolucion.getDate() +
+                                        1); // Al menos 1 día después
+
+                                    const fechaMaximaDevolucion = new Date(fechaEntrega);
+                                    fechaMaximaDevolucion.setDate(fechaMaximaDevolucion.getDate() +
+                                        3); // Máximo 3 días después
+
+                                    // Convertir las fechas a formato de input (YYYY-MM-DD)
+                                    const formatoFecha = (fecha) => fecha.toISOString().split('T')[0];
+
+                                    // Establecer los valores de mínimo y máximo en el campo de fecha de devolución
+                                    fechaDevolucionInput.min = formatoFecha(fechaMinimaDevolucion);
+                                    fechaDevolucionInput.max = formatoFecha(fechaMaximaDevolucion);
+                                    </script>
+
+
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!-- end page title -->
 
-                    <div class="app-search">
-                        <form action="" method="POST">
-                            <div class="mb-2 w-100 position-relative">
-                                <input type="search" name="fruta" class="form-control" placeholder="Buscar Estudio...">
-                                <span class="mdi mdi-magnify search-icon"></span>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="row">
-                        <div id="resultados" class="row">
-                            <!-- Aquí se insertarán los resultados -->
-                        </div>
-                    </div>
-
                 </div> <!-- container -->
+
             </div> <!-- content -->
 
             <!-- Footer -->
             <?php include("includes/footer.php"); ?>
-        </div>
+            <!-- end Footer -->
 
+        </div>
 
         <!-- ============================================================== -->
         <!-- End Page content -->
@@ -953,50 +1116,15 @@ if (!isset($_SESSION['email'])) {
         </div>
     </div>
 
-
-
-
     <!-- Vendor js -->
     <script src="assets/js/vendor.min.js"></script>
 
     <!-- App js -->
     <script src="assets/js/app.min.js"></script>
 
-    <script>
-    $(document).ready(function() {
-        // Función para cargar todos los libros al iniciar
-        function cargarLibros(fruta = '') {
-            $.ajax({
-                url: 'action/search_book.php',
-                type: 'POST',
-                data: {
-                    fruta: fruta
-                },
-                success: function(response) {
-                    $('#resultados').html(response);
-                },
-                error: function() {
-                    $('#resultados').html(
-                        '<div class="alert alert-danger">Error al realizar la búsqueda.</div>'
-                    );
-                }
-            });
-        }
-
-        // Cargar todos los libros al iniciar la página
-        cargarLibros();
-
-        // Función para hacer la búsqueda dinámica
-        $('input[name="fruta"]').on('keyup', function() {
-            var fruta = $(this).val();
-            cargarLibros(fruta); // Hacer la búsqueda en función del término ingresado
-        });
-    });
-    </script>
-
 </body>
 
 
-<!-- Mirrored from coderthemes.com/hyper_2/saas/pages-starter.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Mar 2025 16:33:13 GMT -->
+<!-- Mirrored from coderthemes.com/hyper_2/saas/pages-starter.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 03 Oct 2024 17:04:15 GMT -->
 
 </html>

@@ -12,4 +12,11 @@ CREATE TABLE usuarios (
 );
 
 
-
+CREATE TABLE proveedores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    proveedor VARCHAR(255),
+    contacto VARCHAR(255),
+    telefono VARCHAR(20),
+    ciudad VARCHAR(255),
+    tema_asociado TEXT
+);

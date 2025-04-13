@@ -118,58 +118,118 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
                                 <div class="tab-pane show active" id="profile">
                                     <p>
 
-                                    <div class="col-xl-4 col-lg-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <!-- First Column -->
-                                                    <div class="col-md-6">
-                                                        <h5 class="mt-1 mb-1">Cliente:</h5>
-                                                        <h7 class="text-muted"><?php echo $datos['cliente']?></h7>
+                                        <!-- Contenedor principal -->
+                                    <div class="row">
+                                        <!-- Agrega esta fila -->
+                                        <!-- Card original -->
+                                        <div class="col-xl-4 col-lg-6 mb-4">
+                                            <!-- Modificado col-lg-6 -->
+                                            <div class="card h-100">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <!-- First Column -->
+                                                        <div class="col-md-6">
+                                                            <h5 class="mt-1 mb-1">Cliente:</h5>
+                                                            <h7 class="text-muted"><?php echo $datos['cliente']?></h7>
 
 
-                                                        <h5 class="mb-1">Alcance:</h5>
-                                                        <h7 class="text-muted"><?php echo $datos['alcance']?></h7>
+                                                            <h5 class="mb-1">Alcance:</h5>
+                                                            <h7 class="text-muted"><?php echo $datos['alcance']?></h7>
 
 
-                                                        <h5 class="mb-1">Dimensiones:</h5>
-                                                        <h7 class="text-muted"><?php echo $datos['dimensiones']?>
-                                                        </h7>
+                                                            <h5 class="mb-1">Dimensiones:</h5>
+                                                            <h7 class="text-muted"><?php echo $datos['dimensiones']?>
+                                                            </h7>
 
-                                                        <h5 class="mb-1">Cantidad:</h5>
-                                                        <h7 class="text-muted"><?php echo $datos['cantidad']?>
-                                                        </h7>
+                                                            <h5 class="mb-1">Cantidad:</h5>
+                                                            <h7 class="text-muted"><?php echo $datos['cantidad']?>
+                                                            </h7>
+                                                        </div>
+
+                                                        <!-- Second Column -->
+                                                        <div class="col-md-6">
+                                                            <h5 class="mt-1 mb-1">Fecha:</h5>
+                                                            <h7 class="text-muted"><?php echo $datos['fecha_estudio']?>
+                                                            </h7>
+
+                                                            <h5 class="mb-1">Cotizacion:</h5>
+                                                            <h7 class="text-muted"><?php echo $datos['cotizacion']?>
+                                                            </h7>
+
+
+                                                            <h5 class="mb-1">Tipo:</h5>
+                                                            <h7 class="text-muted"><?php echo $datos['tipo']?></h7>
+
+                                                            <h5 class="mb-1">Cod. Fabricacion:</h5>
+                                                            <h7 class="text-muted">
+                                                                <?php echo $datos['cod_fabricacion']?>
+                                                            </h7>
+
+                                                            <h5 class="mb-1">Doc. Referencia:</h5>
+                                                            <h7 class="text-muted"><?php echo $datos['doc_referencia']?>
+                                                            </h7>
+
+
+                                                        </div>
+                                                    </div> <!-- end row -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Nueva card al lado -->
+                                        <!-- Nueva card al lado -->
+                                        <div class="col-xl-4 col-lg-6 mb-4">
+                                            <div class="card h-100">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="badge badge-warning-lighten p-1"
+                                                            style="text-align: center;">
+                                                            <code class="link-warning">EPÍTOME</code>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <h5 class="mt-1 mb-1">1. MATERIALES:</h5>
+                                                            <h7 class="text-muted" id="total-materiales">0.00</h7>
+
+                                                            <h5 class="mb-1">2. INGENIERIA:</h5>
+                                                            <h7 class="text-muted" id="total-ingenieria">0.00</h7>
+
+                                                            <h5 class="mt-1 mb-1">3. PRUEBAS NO DESTRUCTIVAS:</h5>
+                                                            <h7 class="text-muted" id="total-pruebas">0.00</h7>
+
+                                                            <h5 class="mb-1">4. CONSUMIBLES:</h5>
+                                                            <h7 class="text-muted" id="total-consumibles">0.00</h7>
+                                                            <h5 class="mb-1">5. TRANSPORTE:</h5>
+                                                            <h7 class="text-muted" id="total-transporte">0.00</h7>
+
+                                                            <h5 class="mb-1">6. MANO DE OBRA:</h5>
+                                                            <h7 class="text-muted" id="total-mano-obra">0.00</h7>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+
+                                                            <h5 class="mb-1">7. PRUEBA HIDROSTATICA:</h5>
+                                                            <h7 class="text-muted" id="total-hidrostatica">0.00</h7>
+
+                                                            <h5 class="mb-1">8. PINTURA:</h5>
+                                                            <h7 class="text-muted" id="total-pintura">0.00</h7>
+
+                                                            <h5 class="mb-1">TOTAL COSTOS DIRECTOS:</h5>
+                                                            <h7 class="text-muted" id="total-directos">0.00</h7>
+
+                                                            <h5 class="mb-1">AIU (30%):</h5>
+                                                            <h7 class="text-muted" id="aiu">0.00</h7>
+
+                                                            <h5 class="mb-1">COSTO TOTAL:</h5>
+                                                            <h7 class="text-muted" id="total-final">0.00</h7>
+                                                        </div>
                                                     </div>
-
-                                                    <!-- Second Column -->
-                                                    <div class="col-md-6">
-                                                        <h5 class="mt-1 mb-1">Fecha:</h5>
-                                                        <h7 class="text-muted"><?php echo $datos['fecha_estudio']?></h7>
-
-                                                        <h5 class="mb-1">Cotizacion:</h5>
-                                                        <h7 class="text-muted"><?php echo $datos['cotizacion']?></h7>
-
-
-                                                        <h5 class="mb-1">Tipo:</h5>
-                                                        <h7 class="text-muted"><?php echo $datos['tipo']?></h7>
-
-                                                        <h5 class="mb-1">Cod. Fabricacion:</h5>
-                                                        <h7 class="text-muted"><?php echo $datos['cod_fabricacion']?>
-                                                        </h7>
-
-                                                        <h5 class="mb-1">Doc. Referencia:</h5>
-                                                        <h7 class="text-muted"><?php echo $datos['doc_referencia']?>
-                                                        </h7>
-
-
-                                                    </div>
-                                                </div> <!-- end row -->
-                                            </div> <!-- end card-body -->
-
-                                        </div> <!-- end card -->
-                                    </div> <!-- end col -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- Cierre del row -->
                                     <div class="mb-3">
-                                    <div class="bg-primary-subtle p-2 " style="text-align: center;"><code class="link-primary" >1. MATERIALES</code></div>
+                                        <div class="bg-primary-subtle p-2 " style="text-align: center;"><code
+                                                class="link-primary">1. MATERIALES</code></div>
                                         <div class="mb-3">
                                             <table id="tabla-materiales"
                                                 class="table table-striped dt-responsive nowrap w-100">
@@ -220,9 +280,10 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
 
                                     </div>
                                     <div class="mb-3">
-                                    <div class="bg-primary-subtle p-2 " style="text-align: center;"><code class="link-primary" >2. INGENIERIA</code></div>
+                                        <div class="bg-primary-subtle p-2 " style="text-align: center;"><code
+                                                class="link-primary">2. INGENIERIA</code></div>
                                         <div class="mb-3">
-                                            <table id="tabla-materiales"
+                                            <table id="tabla-ingenieria"
                                                 class="table table-striped dt-responsive nowrap w-100">
                                                 <thead>
                                                     <tr>
@@ -271,8 +332,9 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
 
                                     </div>
                                     <div class="mb-3">
-                                    <div class="bg-primary-subtle p-2 " style="text-align: center;"><code class="link-primary" >3. PRUEBAS NO DESTRUCTIVAS</code></div>
-                                        <table id="tabla-materiales"
+                                        <div class="bg-primary-subtle p-2 " style="text-align: center;"><code
+                                                class="link-primary">3. PRUEBAS NO DESTRUCTIVAS</code></div>
+                                        <table id="tabla-pruebas"
                                             class="table table-striped dt-responsive nowrap w-100">
                                             <thead>
                                                 <tr>
@@ -319,8 +381,9 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
 
                                     </div>
                                     <div class="mb-3">
-                                    <div class="bg-primary-subtle p-2 " style="text-align: center;"><code class="link-primary" >4. CONSUMIBLES</code></div>
-                                        <table id="tabla-materiales"
+                                        <div class="bg-primary-subtle p-2 " style="text-align: center;"><code
+                                                class="link-primary">4. CONSUMIBLES</code></div>
+                                        <table id="tabla-consumibles"
                                             class="table table-striped dt-responsive nowrap w-100">
                                             <thead>
                                                 <tr>
@@ -367,8 +430,9 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
 
                                     </div>
                                     <div class="mb-3">
-                                    <div class="bg-primary-subtle p-2 " style="text-align: center;"><code class="link-primary" >5. TRANSPORTE</code></div>
-                                        <table id="tabla-materiales"
+                                        <div class="bg-primary-subtle p-2 " style="text-align: center;"><code
+                                                class="link-primary">5. TRANSPORTE</code></div>
+                                        <table id="tabla-transporte"
                                             class="table table-striped dt-responsive nowrap w-100">
                                             <thead>
                                                 <tr>
@@ -415,8 +479,9 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
 
                                     </div>
                                     <div class="mb-3">
-                                    <div class="bg-primary-subtle p-2 " style="text-align: center;"><code class="link-primary" >6. MANO DE OBRA</code></div>
-                                        <table id="tabla-materiales"
+                                        <div class="bg-primary-subtle p-2 " style="text-align: center;"><code
+                                                class="link-primary">6. MANO DE OBRA</code></div>
+                                        <table id="tabla-mano-obra"
                                             class="table table-striped dt-responsive nowrap w-100">
                                             <thead>
                                                 <tr>
@@ -463,8 +528,9 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
 
                                     </div>
                                     <div class="mb-3">
-                                    <div class="bg-primary-subtle p-2 " style="text-align: center;"><code class="link-primary" >7. PRUEBA HIDROSTATICA</code></div>
-                                        <table id="tabla-materiales"
+                                        <div class="bg-primary-subtle p-2 " style="text-align: center;"><code
+                                                class="link-primary">7. PRUEBA HIDROSTATICA</code></div>
+                                        <table id="tabla-hidrostatica"
                                             class="table table-striped dt-responsive nowrap w-100">
                                             <thead>
                                                 <tr>
@@ -511,8 +577,9 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
 
                                     </div>
                                     <div class="mb-3">
-                                    <div class="bg-primary-subtle p-2 " style="text-align: center;"><code class="link-primary" >8. PINTURA MANO DE OBRA</code></div>
-                                        <table id="tabla-materiales"
+                                        <div class="bg-primary-subtle p-2 " style="text-align: center;"><code
+                                                class="link-primary">8. PINTURA MANO DE OBRA</code></div>
+                                        <table id="tabla-pintura"
                                             class="table table-striped dt-responsive nowrap w-100">
                                             <thead>
                                                 <tr>
@@ -560,30 +627,137 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
                                     </div>
                                     </p>
                                 </div>
+
+
+
                                 <script>
                                 document.addEventListener('DOMContentLoaded', function() {
-                                    // Calcular subtotales
-                                    document.querySelectorAll('#tabla-materiales tbody tr').forEach(
-                                        row => {
-                                            const cantidad = parseFloat(row.dataset.cantidad) || 0;
-                                            const piezas = parseFloat(row.dataset.piezas) || 0;
-                                            const tarifa = parseFloat(row.dataset.tarifa) || 0;
+                                    const secciones = {
+                                        'materiales': '1. MATERIALES',
+                                        'ingenieria': '2. INGENIERIA',
+                                        'pruebas': '3. PRUEBAS NO DESTRUCTIVAS',
+                                        'consumibles': '4. CONSUMIBLES',
+                                        'transporte': '5. TRANSPORTE',
+                                        'mano-obra': '6. MANO DE OBRA',
+                                        'hidrostatica': '7. PRUEBA HIDROSTATICA',
+                                        'pintura': '8. PINTURA MANO DE OBRA'
+                                    };
 
-                                            const subtotal = cantidad * piezas * tarifa;
-                                            row.querySelector('.subtotal').textContent = subtotal
-                                                .toFixed(2);
+                                    function calcularTotales() {
+                                        let totalGeneral = 0;
+
+                                        // Calcular por cada sección
+                                        Object.entries(secciones).forEach(([key, nombreSeccion]) => {
+                                            let totalSeccion = 0;
+
+                                            document.querySelectorAll(`#tabla-${key} tbody tr`).forEach(
+                                                row => {
+                                                    const cantidad = parseFloat(row.dataset
+                                                        .cantidad) || 0;
+                                                    const piezas = parseFloat(row.dataset.piezas) ||
+                                                        0;
+                                                    const tarifa = parseFloat(row.dataset.tarifa) ||
+                                                        0;
+                                                    const subtotal = cantidad * piezas * tarifa;
+
+                                                    row.querySelector('.subtotal').textContent =
+                                                        subtotal.toFixed(2);
+                                                    totalSeccion += subtotal;
+                                                });
+
+                                            // Actualizar total de sección
+                                            document.querySelector(`#total-${key}`).textContent =
+                                                totalSeccion.toFixed(2);
+                                            totalGeneral += totalSeccion;
                                         });
 
-                                    // Manejar edición
-                                    document.querySelectorAll('.editar-item').forEach(btn => {
-                                        btn.addEventListener('click', function() {
-                                            const idItem = this.dataset.id;
-                                            window.location.href =
-                                                `editar_item.php?id_item=${idItem}`;
-                                        });
-                                    });
+                                        // Calcular totales finales
+                                        const aiu = totalGeneral * 0.3;
+                                        const totalFinal = totalGeneral + aiu;
+
+                                        document.querySelector('#total-directos').textContent = totalGeneral
+                                            .toFixed(2);
+                                        document.querySelector('#aiu').textContent = aiu.toFixed(2);
+                                        document.querySelector('#total-final').textContent = totalFinal.toFixed(
+                                            2);
+                                    }
+
+                                    // Actualizar IDs de tablas en PHP
+                                    <?php 
+    $seccionesIds = [
+        'materiales' => '1. MATERIALES',
+        'ingenieria' => '2. INGENIERIA',
+        'pruebas' => '3. PRUEBAS NO DESTRUCTIVAS',
+        'consumibles' => '4. CONSUMIBLES',
+        'transporte' => '5. TRANSPORTE',
+        'mano-obra' => '6. MANO DE OBRA',
+        'hidrostatica' => '7. PRUEBA HIDROSTATICA',
+        'pintura' => '8. PINTURA MANO DE OBRA'
+    ];
+    ?>
+
+                                    // Inicializar cálculos
+                                    calcularTotales();
                                 });
                                 </script>
+
+                                <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    // Función de formato numérico personalizado
+                                    const formatoNumerico = (valor) => {
+                                        return new Intl.NumberFormat('es-ES', {
+                                                style: 'decimal',
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }).format(valor)
+                                            .replace(/\./g, '|')
+                                            .replace(/,/g, '.')
+                                            .replace(/\|/g, ".");
+                                    };
+
+                                    // Función para formatear todos los números
+                                    const aplicarFormato = (elementos) => {
+                                        elementos.forEach(elemento => {
+                                            const valor = parseFloat(elemento.textContent.replace(
+                                                /[^\d.]/g, ''));
+                                            if (!isNaN(valor)) {
+                                                elemento.textContent = formatoNumerico(valor);
+                                            }
+                                        });
+                                    };
+
+                                    // Calcular y formatear subtotales
+                                    document.querySelectorAll('.subtotal').forEach(celda => {
+                                        const cantidad = parseFloat(celda.closest('tr').dataset
+                                            .cantidad) || 0;
+                                        const piezas = parseFloat(celda.closest('tr').dataset.piezas) ||
+                                            0;
+                                        const tarifa = parseFloat(celda.closest('tr').dataset.tarifa) ||
+                                            0;
+                                        const subtotal = cantidad * piezas * tarifa;
+
+                                        celda.textContent = formatoNumerico(subtotal);
+                                    });
+
+                                    // Formatear números en tablas
+                                    document.querySelectorAll('td:not(.subtotal)').forEach(celda => {
+                                        if (/^\d+\.?\d*$/.test(celda.textContent.trim())) {
+                                            const valor = parseFloat(celda.textContent);
+                                            celda.textContent = formatoNumerico(valor);
+                                        }
+                                    });
+
+                                    // Formatear totales en la card
+                                    const elementosTotal = document.querySelectorAll(
+                                        '[id^="total-"], #aiu, #total-final');
+                                    aplicarFormato(elementosTotal);
+                                });
+                                </script>
+
+
+
+
+
                                 <div class="tab-pane" id="settings">
                                     <p>
 

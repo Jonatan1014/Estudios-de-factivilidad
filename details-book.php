@@ -23,7 +23,7 @@ if (empty($_POST['id_estudio'])){
 } 
 require('includes/Class-data.php');
 $libro = new Data();
-$datos = $libro->listarEF_ID($_POST['id_estudio']); // Obtener los datos de un libro específico
+$datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de un libro específico
 
 
 ?>
@@ -169,12 +169,421 @@ $datos = $libro->listarEF_ID($_POST['id_estudio']); // Obtener los datos de un l
                                         </div> <!-- end card -->
                                     </div> <!-- end col -->
                                     <div class="mb-3">
-                                        <input type="text" placeholder="1. Materiales" name="cedula" id="simpleinput"
-                                            class="form-control" readonly style="text-align: center;">
+                                    <div class="bg-primary-subtle p-2 " style="text-align: center;"><code class="link-primary" >1. MATERIALES</code></div>
+                                        <div class="mb-3">
+                                            <table id="tabla-materiales"
+                                                class="table table-striped dt-responsive nowrap w-100">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Código</th>
+                                                        <th>Descripción</th>
+                                                        <th>Unidad</th>
+                                                        <th>Cantidad</th>
+                                                        <th>Piezas</th>
+                                                        <th>Tarifa</th>
+                                                        <th>Subtotal</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php 
+            $seccionMateriales = array_filter($datos['secciones'], function($seccion) {
+                return strtoupper($seccion['nombre']) === '1. MATERIALES';
+            });
+            
+            if (!empty($seccionMateriales)) {
+                $materiales = reset($seccionMateriales)['items'];
+                foreach ($materiales as $item) {
+            ?>
+                                                    <tr data-cantidad="<?= $item['cantidad'] ?>"
+                                                        data-piezas="<?= $item['no_piezas'] ?>"
+                                                        data-tarifa="<?= $item['tarifa'] ?>">
+                                                        <td><?= htmlspecialchars($item['codigo_item']) ?></td>
+                                                        <td><?= htmlspecialchars($item['descripcion']) ?></td>
+                                                        <td><?= htmlspecialchars($item['unidad']) ?></td>
+                                                        <td><?= htmlspecialchars($item['cantidad']) ?></td>
+                                                        <td><?= htmlspecialchars($item['no_piezas']) ?></td>
+                                                        <td><?= htmlspecialchars($item['tarifa']) ?></td>
+                                                        <td class="subtotal"></td>
+
+                                                    </tr>
+                                                    <?php 
+                }
+            } else {
+                echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
+            }
+            ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="mb-3">
+                                    <div class="bg-primary-subtle p-2 " style="text-align: center;"><code class="link-primary" >2. INGENIERIA</code></div>
+                                        <div class="mb-3">
+                                            <table id="tabla-materiales"
+                                                class="table table-striped dt-responsive nowrap w-100">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Código</th>
+                                                        <th>Descripción</th>
+                                                        <th>Unidad</th>
+                                                        <th>Cantidad</th>
+                                                        <th>Piezas</th>
+                                                        <th>Tarifa</th>
+                                                        <th>Subtotal</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php 
+            $seccionMateriales = array_filter($datos['secciones'], function($seccion) {
+                return strtoupper($seccion['nombre']) === '2. INGENIERIA';
+            });
+            
+            if (!empty($seccionMateriales)) {
+                $materiales = reset($seccionMateriales)['items'];
+                foreach ($materiales as $item) {
+            ?>
+                                                    <tr data-cantidad="<?= $item['cantidad'] ?>"
+                                                        data-piezas="<?= $item['no_piezas'] ?>"
+                                                        data-tarifa="<?= $item['tarifa'] ?>">
+                                                        <td><?= htmlspecialchars($item['codigo_item']) ?></td>
+                                                        <td><?= htmlspecialchars($item['descripcion']) ?></td>
+                                                        <td><?= htmlspecialchars($item['unidad']) ?></td>
+                                                        <td><?= htmlspecialchars($item['cantidad']) ?></td>
+                                                        <td><?= htmlspecialchars($item['no_piezas']) ?></td>
+                                                        <td><?= htmlspecialchars($item['tarifa']) ?></td>
+                                                        <td class="subtotal"></td>
+
+                                                    </tr>
+                                                    <?php 
+                }
+            } else {
+                echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
+            }
+            ?>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="mb-3">
+                                    <div class="bg-primary-subtle p-2 " style="text-align: center;"><code class="link-primary" >3. PRUEBAS NO DESTRUCTIVAS</code></div>
+                                        <table id="tabla-materiales"
+                                            class="table table-striped dt-responsive nowrap w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th>Código</th>
+                                                    <th>Descripción</th>
+                                                    <th>Unidad</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Piezas</th>
+                                                    <th>Tarifa</th>
+                                                    <th>Subtotal</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php 
+            $seccionMateriales = array_filter($datos['secciones'], function($seccion) {
+                return strtoupper($seccion['nombre']) === '3. PRUEBAS NO DESTRUCTIVAS';
+            });
+            
+            if (!empty($seccionMateriales)) {
+                $materiales = reset($seccionMateriales)['items'];
+                foreach ($materiales as $item) {
+            ?>
+                                                <tr data-cantidad="<?= $item['cantidad'] ?>"
+                                                    data-piezas="<?= $item['no_piezas'] ?>"
+                                                    data-tarifa="<?= $item['tarifa'] ?>">
+                                                    <td><?= htmlspecialchars($item['codigo_item']) ?></td>
+                                                    <td><?= htmlspecialchars($item['descripcion']) ?></td>
+                                                    <td><?= htmlspecialchars($item['unidad']) ?></td>
+                                                    <td><?= htmlspecialchars($item['cantidad']) ?></td>
+                                                    <td><?= htmlspecialchars($item['no_piezas']) ?></td>
+                                                    <td><?= htmlspecialchars($item['tarifa']) ?></td>
+                                                    <td class="subtotal"></td>
+
+                                                </tr>
+                                                <?php 
+                }
+            } else {
+                echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
+            }
+            ?>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <div class="mb-3">
+                                    <div class="bg-primary-subtle p-2 " style="text-align: center;"><code class="link-primary" >4. CONSUMIBLES</code></div>
+                                        <table id="tabla-materiales"
+                                            class="table table-striped dt-responsive nowrap w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th>Código</th>
+                                                    <th>Descripción</th>
+                                                    <th>Unidad</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Piezas</th>
+                                                    <th>Tarifa</th>
+                                                    <th>Subtotal</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php 
+            $seccionMateriales = array_filter($datos['secciones'], function($seccion) {
+                return strtoupper($seccion['nombre']) === '4. CONSUMIBLES';
+            });
+            
+            if (!empty($seccionMateriales)) {
+                $materiales = reset($seccionMateriales)['items'];
+                foreach ($materiales as $item) {
+            ?>
+                                                <tr data-cantidad="<?= $item['cantidad'] ?>"
+                                                    data-piezas="<?= $item['no_piezas'] ?>"
+                                                    data-tarifa="<?= $item['tarifa'] ?>">
+                                                    <td><?= htmlspecialchars($item['codigo_item']) ?></td>
+                                                    <td><?= htmlspecialchars($item['descripcion']) ?></td>
+                                                    <td><?= htmlspecialchars($item['unidad']) ?></td>
+                                                    <td><?= htmlspecialchars($item['cantidad']) ?></td>
+                                                    <td><?= htmlspecialchars($item['no_piezas']) ?></td>
+                                                    <td><?= htmlspecialchars($item['tarifa']) ?></td>
+                                                    <td class="subtotal"></td>
+
+                                                </tr>
+                                                <?php 
+                }
+            } else {
+                echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
+            }
+            ?>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <div class="mb-3">
+                                    <div class="bg-primary-subtle p-2 " style="text-align: center;"><code class="link-primary" >5. TRANSPORTE</code></div>
+                                        <table id="tabla-materiales"
+                                            class="table table-striped dt-responsive nowrap w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th>Código</th>
+                                                    <th>Descripción</th>
+                                                    <th>Unidad</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Piezas</th>
+                                                    <th>Tarifa</th>
+                                                    <th>Subtotal</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php 
+            $seccionMateriales = array_filter($datos['secciones'], function($seccion) {
+                return strtoupper($seccion['nombre']) === '5. TRANSPORTE';
+            });
+            
+            if (!empty($seccionMateriales)) {
+                $materiales = reset($seccionMateriales)['items'];
+                foreach ($materiales as $item) {
+            ?>
+                                                <tr data-cantidad="<?= $item['cantidad'] ?>"
+                                                    data-piezas="<?= $item['no_piezas'] ?>"
+                                                    data-tarifa="<?= $item['tarifa'] ?>">
+                                                    <td><?= htmlspecialchars($item['codigo_item']) ?></td>
+                                                    <td><?= htmlspecialchars($item['descripcion']) ?></td>
+                                                    <td><?= htmlspecialchars($item['unidad']) ?></td>
+                                                    <td><?= htmlspecialchars($item['cantidad']) ?></td>
+                                                    <td><?= htmlspecialchars($item['no_piezas']) ?></td>
+                                                    <td><?= htmlspecialchars($item['tarifa']) ?></td>
+                                                    <td class="subtotal"></td>
+
+                                                </tr>
+                                                <?php 
+                }
+            } else {
+                echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
+            }
+            ?>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <div class="mb-3">
+                                    <div class="bg-primary-subtle p-2 " style="text-align: center;"><code class="link-primary" >6. MANO DE OBRA</code></div>
+                                        <table id="tabla-materiales"
+                                            class="table table-striped dt-responsive nowrap w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th>Código</th>
+                                                    <th>Descripción</th>
+                                                    <th>Unidad</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Piezas</th>
+                                                    <th>Tarifa</th>
+                                                    <th>Subtotal</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php 
+            $seccionMateriales = array_filter($datos['secciones'], function($seccion) {
+                return strtoupper($seccion['nombre']) === '6. MANO DE OBRA';
+            });
+            
+            if (!empty($seccionMateriales)) {
+                $materiales = reset($seccionMateriales)['items'];
+                foreach ($materiales as $item) {
+            ?>
+                                                <tr data-cantidad="<?= $item['cantidad'] ?>"
+                                                    data-piezas="<?= $item['no_piezas'] ?>"
+                                                    data-tarifa="<?= $item['tarifa'] ?>">
+                                                    <td><?= htmlspecialchars($item['codigo_item']) ?></td>
+                                                    <td><?= htmlspecialchars($item['descripcion']) ?></td>
+                                                    <td><?= htmlspecialchars($item['unidad']) ?></td>
+                                                    <td><?= htmlspecialchars($item['cantidad']) ?></td>
+                                                    <td><?= htmlspecialchars($item['no_piezas']) ?></td>
+                                                    <td><?= htmlspecialchars($item['tarifa']) ?></td>
+                                                    <td class="subtotal"></td>
+
+                                                </tr>
+                                                <?php 
+                }
+            } else {
+                echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
+            }
+            ?>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <div class="mb-3">
+                                    <div class="bg-primary-subtle p-2 " style="text-align: center;"><code class="link-primary" >7. PRUEBA HIDROSTATICA</code></div>
+                                        <table id="tabla-materiales"
+                                            class="table table-striped dt-responsive nowrap w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th>Código</th>
+                                                    <th>Descripción</th>
+                                                    <th>Unidad</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Piezas</th>
+                                                    <th>Tarifa</th>
+                                                    <th>Subtotal</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php 
+            $seccionMateriales = array_filter($datos['secciones'], function($seccion) {
+                return strtoupper($seccion['nombre']) === '7. PRUEBA HIDROSTATICA';
+            });
+            
+            if (!empty($seccionMateriales)) {
+                $materiales = reset($seccionMateriales)['items'];
+                foreach ($materiales as $item) {
+            ?>
+                                                <tr data-cantidad="<?= $item['cantidad'] ?>"
+                                                    data-piezas="<?= $item['no_piezas'] ?>"
+                                                    data-tarifa="<?= $item['tarifa'] ?>">
+                                                    <td><?= htmlspecialchars($item['codigo_item']) ?></td>
+                                                    <td><?= htmlspecialchars($item['descripcion']) ?></td>
+                                                    <td><?= htmlspecialchars($item['unidad']) ?></td>
+                                                    <td><?= htmlspecialchars($item['cantidad']) ?></td>
+                                                    <td><?= htmlspecialchars($item['no_piezas']) ?></td>
+                                                    <td><?= htmlspecialchars($item['tarifa']) ?></td>
+                                                    <td class="subtotal"></td>
+
+                                                </tr>
+                                                <?php 
+                }
+            } else {
+                echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
+            }
+            ?>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <div class="mb-3">
+                                    <div class="bg-primary-subtle p-2 " style="text-align: center;"><code class="link-primary" >8. PINTURA MANO DE OBRA</code></div>
+                                        <table id="tabla-materiales"
+                                            class="table table-striped dt-responsive nowrap w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th>Código</th>
+                                                    <th>Descripción</th>
+                                                    <th>Unidad</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Piezas</th>
+                                                    <th>Tarifa</th>
+                                                    <th>Subtotal</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php 
+            $seccionMateriales = array_filter($datos['secciones'], function($seccion) {
+                return strtoupper($seccion['nombre']) === '8. PINTURA MANO DE OBRA';
+            });
+            
+            if (!empty($seccionMateriales)) {
+                $materiales = reset($seccionMateriales)['items'];
+                foreach ($materiales as $item) {
+            ?>
+                                                <tr data-cantidad="<?= $item['cantidad'] ?>"
+                                                    data-piezas="<?= $item['no_piezas'] ?>"
+                                                    data-tarifa="<?= $item['tarifa'] ?>">
+                                                    <td><?= htmlspecialchars($item['codigo_item']) ?></td>
+                                                    <td><?= htmlspecialchars($item['descripcion']) ?></td>
+                                                    <td><?= htmlspecialchars($item['unidad']) ?></td>
+                                                    <td><?= htmlspecialchars($item['cantidad']) ?></td>
+                                                    <td><?= htmlspecialchars($item['no_piezas']) ?></td>
+                                                    <td><?= htmlspecialchars($item['tarifa']) ?></td>
+                                                    <td class="subtotal"></td>
+
+                                                </tr>
+                                                <?php 
+                }
+            } else {
+                echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
+            }
+            ?>
+                                            </tbody>
+                                        </table>
 
                                     </div>
                                     </p>
                                 </div>
+                                <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    // Calcular subtotales
+                                    document.querySelectorAll('#tabla-materiales tbody tr').forEach(
+                                        row => {
+                                            const cantidad = parseFloat(row.dataset.cantidad) || 0;
+                                            const piezas = parseFloat(row.dataset.piezas) || 0;
+                                            const tarifa = parseFloat(row.dataset.tarifa) || 0;
+
+                                            const subtotal = cantidad * piezas * tarifa;
+                                            row.querySelector('.subtotal').textContent = subtotal
+                                                .toFixed(2);
+                                        });
+
+                                    // Manejar edición
+                                    document.querySelectorAll('.editar-item').forEach(btn => {
+                                        btn.addEventListener('click', function() {
+                                            const idItem = this.dataset.id;
+                                            window.location.href =
+                                                `editar_item.php?id_item=${idItem}`;
+                                        });
+                                    });
+                                });
+                                </script>
                                 <div class="tab-pane" id="settings">
                                     <p>
 

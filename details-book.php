@@ -29,7 +29,7 @@ $datos = $libro->listarEF_ID($_POST['id_estudio']); // Obtener los datos de un l
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 
 <!-- Mirrored from coderthemes.com/hyper_2/saas/pages-starter.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 03 Oct 2024 17:04:15 GMT -->
@@ -131,9 +131,9 @@ $datos = $libro->listarEF_ID($_POST['id_estudio']); // Obtener los datos de un l
                                                         <h5 class="mb-1">Alcance:</h5>
                                                         <h7 class="text-muted"><?php echo $datos['alcance']?></h7>
 
-                                                       
+
                                                         <h5 class="mb-1">Dimensiones:</h5>
-                                                        <h7 class="text-muted"><?php echo $datos['dimenciones']?>
+                                                        <h7 class="text-muted"><?php echo $datos['dimensiones']?>
                                                         </h7>
 
                                                         <h5 class="mb-1">Cantidad:</h5>
@@ -144,7 +144,7 @@ $datos = $libro->listarEF_ID($_POST['id_estudio']); // Obtener los datos de un l
                                                     <!-- Second Column -->
                                                     <div class="col-md-6">
                                                         <h5 class="mt-1 mb-1">Fecha:</h5>
-                                                        <h7 class="text-muted"><?php var_dump($_POST['id_estudio']); echo $datos['fecha_estudio']?></h7>
+                                                        <h7 class="text-muted"><?php echo $datos['fecha_estudio']?></h7>
 
                                                         <h5 class="mb-1">Cotizacion:</h5>
                                                         <h7 class="text-muted"><?php echo $datos['cotizacion']?></h7>
@@ -154,17 +154,25 @@ $datos = $libro->listarEF_ID($_POST['id_estudio']); // Obtener los datos de un l
                                                         <h7 class="text-muted"><?php echo $datos['tipo']?></h7>
 
                                                         <h5 class="mb-1">Cod. Fabricacion:</h5>
-                                                        <h7 class="text-muted"><?php echo $datos['cod_fabricacion']?></h7>
+                                                        <h7 class="text-muted"><?php echo $datos['cod_fabricacion']?>
+                                                        </h7>
 
                                                         <h5 class="mb-1">Doc. Referencia:</h5>
-                                                        <h7 class="text-muted"><?php echo $datos['doc_referencia']?></h7>
+                                                        <h7 class="text-muted"><?php echo $datos['doc_referencia']?>
+                                                        </h7>
 
-                                                        
+
                                                     </div>
                                                 </div> <!-- end row -->
                                             </div> <!-- end card-body -->
+
                                         </div> <!-- end card -->
                                     </div> <!-- end col -->
+                                    <div class="mb-3">
+                                        <input type="text" placeholder="1. Materiales" name="cedula" id="simpleinput"
+                                            class="form-control" readonly style="text-align: center;">
+
+                                    </div>
                                     </p>
                                 </div>
                                 <div class="tab-pane" id="settings">
@@ -175,6 +183,11 @@ $datos = $libro->listarEF_ID($_POST['id_estudio']); // Obtener los datos de un l
                                         <div class="col-lg-12">
                                             <form action="action/register_loan.php" method="post">
                                                 <div class="row">
+                                                    <div class="mb-3">
+
+                                                        <input type="text" name="cedula" id="simpleinput"
+                                                            class="form-control" readonly>
+                                                    </div>
                                                     <!-- Primera columna -->
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">

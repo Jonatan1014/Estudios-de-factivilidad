@@ -21,20 +21,20 @@ $usuario = $usuario->datosUser_email($_SESSION['email']);
                 <!-- Logo light -->
                 <a href="index.php" class="logo-light">
                     <span class="logo-lg">
-                        <img src="assets/images/logo.png" alt="logo">
+                        <img src="assets/images/logo_udi.png" alt="logo">
                     </span>
                     <span class="logo-sm">
-                        <img src="assets/images/logo-sm.png" alt="small logo">
+                        <img src="assets/images/logo_udi.png" alt="small logo">
                     </span>
                 </a>
 
                 <!-- Logo Dark -->
                 <a href="index.php" class="logo-dark">
                     <span class="logo-lg">
-                        <img src="assets/images/logo-dark.png" alt="dark logo">
+                        <img src="assets/images/logo_udi.png" alt="dark logo">
                     </span>
                     <span class="logo-sm">
-                        <img src="assets/images/logo-dark-sm.png" alt="small logo">
+                        <img src="assets/images/logo_udi.png" alt="small logo">
                     </span>
                 </a>
             </div>
@@ -54,46 +54,73 @@ $usuario = $usuario->datosUser_email($_SESSION['email']);
             </button>
 
             <!-- Topbar Search Form -->
-           
+
         </div>
 
         <ul class="topbar-menu d-flex align-items-center gap-3">
-           
-            <li class="d-none d-sm-inline-block">
-                <div class="nav-link" id="light-dark-mode" data-bs-toggle="tooltip" data-bs-placement="left" title="Theme Mode">
+
+
+            <li class="dropdown notification-list">
+
+
+                <div class="nav-link" id="light-dark-mode" data-bs-toggle="tooltip" data-bs-placement="left"
+                    title="Theme Mode">
                     <i class="ri-moon-line font-22"></i>
                 </div>
+
             </li>
 
 
+
+
+
+
+
+            <!-- <li class="d-none d-sm-inline-block">
+                <div class="nav-link" id="light-dark-mode" data-bs-toggle="tooltip" data-bs-placement="left"
+                    title="Theme Mode">
+                    <i class="ri-moon-line font-22"></i>
+                </div>
+            </li> -->
+
+
+
+
             <li class="dropdown">
-                <a class="nav-link dropdown-toggle arrow-none nav-user px-2" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <span class="account-user-avatar">
-                        <img src="assets/images/users/avatar-1.jpg" alt="user-image" width="32" class="rounded-circle">
+                <a class="nav-link dropdown-toggle arrow-none nav-user px-2" data-bs-toggle="dropdown" href="#"
+                    role="button" aria-haspopup="false" aria-expanded="false">
+                    <span class="avatar-md d-flex justify-content-center align-items-center" style="height: 100%;">
+                        <span
+                            class="avatar-title bg-primary rounded-circle d-flex justify-content-center align-items-center"
+                            style="width: 80%; height: 80%;">
+                            <?php echo substr($usuario["nombre"], 0, 3); ?>
+
+                        </span>
                     </span>
+
+                    <!-- Avatar Medium -->
                     <span class="d-lg-flex flex-column gap-1 d-none">
-                        <h5 class="my-0"><?php echo substr($usuario["nombre"], 0, 3); ?>
-                        </h5>
-                        <h6 class="my-0 fw-normal"><?php echo substr($usuario["rol"], 0, 5); ?>
-                        </h6>
+                        <h5 class="my-0"><?php echo $usuario["nombre"] ?></h5>
+                        <h6 class="my-0 fw-normal"><?php echo $usuario["rol"] ?></h6>
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
                     <!-- item-->
                     <div class=" dropdown-header noti-title">
-                        <h6 class="text-overflow m-0">Welcome !</h6>
+                        <h6 class="text-overflow m-0">Bienvenido!</h6>
                     </div>
 
+
                     <!-- item-->
-                    <a href="./pages-profile.php" class="dropdown-item">
+                    <a href="pages-profile-2.php" class="dropdown-item">
                         <i class="mdi mdi-account-circle me-1"></i>
-                        <span>My Account</span>
+                        <span>Mi Perfil</span>
                     </a>
 
                     <!-- item-->
-                    <a href="action/destroy-session.php" class="dropdown-item">
+                    <a href="action/destroy_session.php" class="dropdown-item">
                         <i class="mdi mdi-logout me-1"></i>
-                        <span>Logout</span>
+                        <span>Cerrar Sesion</span>
                     </a>
                 </div>
             </li>

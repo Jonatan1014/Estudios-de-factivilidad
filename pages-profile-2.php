@@ -10,45 +10,32 @@ if (!isset($_SESSION['email'])) {
 
 require('includes/Class-user.php'); // Asegúrate de incluir la clase correcta
 $usuario = new Usuario();
-$usuario = $usuario->datosUser_email($_SESSION['email']); // Obtener los datos de los libros
-if ($usuario["rol"]!="admin" && $usuario["rol"]!="root") {
-    header('Location: view-student.php');
-    exit();
+// $usuario = $usuario->datosUser_rol($_SESSION['usuario_email']); // Obtener los datos de los libros
+// if ($usuario["rol"]!="Admin" && $usuario["rol"]!="Root") {
+//     header('Location: view-student.php');
+//     exit();
 
-}
+// }
 
-// require('includes/class_libroqr.php'); // Asegúrate de incluir la clase correcta
-// $libro = new Libroqr();
-// $libro = $libro->listarLibros_todos(); // Obtener los datos de los libros
+$usuario = $usuario->datosUser_email($_SESSION['email']);
 ?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 
 
-<!-- Mirrored from coderthemes.com/hyper_2/saas/tables-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 03 Oct 2024 17:04:59 GMT -->
+<!-- Mirrored from coderthemes.com/hyper_2/saas/pages-profile-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 03 Oct 2024 17:04:10 GMT -->
 
 <head>
     <meta charset="utf-8" />
-    <title>List Books</title>
+    <title>Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/logo-dark-.png">
-
-    <!-- Datatables css -->
-    <link href="assets/vendor/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/vendor/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet"
-        type="text/css" />
-    <link href="assets/vendor/datatables.net-fixedcolumns-bs5/css/fixedColumns.bootstrap5.min.css" rel="stylesheet"
-        type="text/css" />
-    <link href="assets/vendor/datatables.net-fixedheader-bs5/css/fixedHeader.bootstrap5.min.css" rel="stylesheet"
-        type="text/css" />
-    <link href="assets/vendor/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet"
-        type="text/css" />
-    <link href="assets/vendor/datatables.net-select-bs5/css/select.bootstrap5.min.css" rel="stylesheet"
-        type="text/css" />
 
     <!-- Theme Config Js -->
     <script src="assets/js/hyper-config.js"></script>
@@ -65,16 +52,13 @@ if ($usuario["rol"]!="admin" && $usuario["rol"]!="root") {
     <div class="wrapper">
 
 
-        <!-- ========== Topbar Start ========== -->
-        <?php
-        include ("includes/navbar.php");
-        ?>
+         <!-- ========== Topbar Start ========== -->
+         <?php include("includes/navbar.php")        ?>
         <!-- ========== Topbar End ========== -->
 
+
         <!-- ========== Left Sidebar Start ========== -->
-        <?php
-        include ("includes/sidebar.php");
-        ?>
+        <?php include("includes/sidebar.php")        ?>
         <!-- ========== Left Sidebar End ========== -->
 
         <!-- ============================================================== -->
@@ -94,113 +78,55 @@ if ($usuario["rol"]!="admin" && $usuario["rol"]!="root") {
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                                        <li class="breadcrumb-item active">Lista Libros</li>
+                                        <li class="breadcrumb-item active">Perfil</li>
                                     </ol>
                                 </div>
-                                <h4 class="page-title">Lista Libros</h4>
+                                <h4 class="page-title">Perfil</h4>
                             </div>
                         </div>
                     </div>
                     <!-- end page title -->
 
 
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            
+                            <img src="assets/images/users/avatar-1.jpg" class="rounded-circle avatar-lg img-thumbnail"
+                                alt="profile-image">
 
-                                    <!-- <h4 class="header-title">Scroll - Vertical</h4> -->
-
-                                    <div class="tab-content">
-                                        <div class="tab-pane show active" id="scroll-vertical-preview">
-                                            <table id="scroll-vertical-datatable"
-                                                class="table table-striped dt-responsive nowrap w-100">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th>Nombre</th>
-                                                        <th>Fecha Subida</th>
-                                                        <th>Responsabe</th>
-                                                        <th>Acciones</th>
-                                                    </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    <?php foreach($libro as $datos){
-
-                                                 ?>
-                                                    <!-- Libro 1 -->
-                                                    <tr>
-                                                        <td><?php echo $datos["idLibro"] ?></td>
-                                                        <td><?php echo $datos["titulo"] ?></td>
-                                                        <td><?php echo $datos["autor"] ?></td>
-                                                        <td><?php echo $datos["editorial"] ?></td>
-                                                        <td><?php echo $datos["año_publicacion"] ?></td>
-                                                        <td><?php echo $datos["isbn"] ?></td>
-                                                        <?php if($datos["estado"]=="Disponible") { ?>
-                                                        <td><span class="badge bg-success">Disponible</span></td>
-
-                                                        <?php }elseif($datos["estado"]=="Prestado") { ?>
-                                                        <td><span class="badge bg-info">Prestado</span></td>
-
-                                                        <?php }else{?>
-                                                        <td><span class="badge bg-danger">Inactivo</span></td>
-                                                        <?php }?>
-                                                        <td><?php echo $datos["ubicacion"] ?></td>
-                                                        <td><?php echo $datos["edicion"] ?></td>
-                                                        <td><?php echo $datos["idioma"] ?></td>
-                                                        <td><?php echo $datos["categoria"] ?></td>
-                                                        <td>
-                                                            <!-- Formulario para Editar -->
-                                                            <form action="editar_book.php" method="POST"
-                                                                style="display:inline-block;">
-                                                                <input type="hidden" name="idLibro"
-                                                                    value="<?php echo $datos["idLibro"] ?>">
-                                                                <button type="submit"
-                                                                    class="btn btn-outline-info rounded-pill"><i
-                                                                        class="uil-edit"></i> Edit</button>
-                                                            </form>
-
-                                                            <!-- Formulario para Eliminar
-                                                            <form action="eliminar_libro.php" method="POST"
-                                                                style="display:inline-block;">
-                                                                <input type="hidden" name="idLibro" value="<?php //echo $datos["idLibro"] ?>">
-                                                                <button type="submit"
-                                                                    class="btn btn-outline-danger rounded-pill"><i
-                                                                        class="uil-trash"></i> Del</button>
-                                                            </form> -->
-                                                        </td>
-                                                    </tr>
-                                                    <?php  }?>
+                                <p class="text-muted font-14"><?php echo $usuario["rol"] ?></p>
+                            <h4 class="mb-0 mt-2"><?php echo $usuario["nombre"] ?> </h4>
 
 
-                                                </tbody>
-                                            </table>
+                            <div class="text-start mt-3">
+                               
 
+                                <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span
+                                        class="ms-2 "><?php echo $usuario["email"] ?></span></p>
 
+                                <p class="text-muted mb-1 font-13"><strong>ID :</strong> <span
+                                        class="ms-2"><?php echo $usuario["id"] ?></span></p>
+                                <p class="text-muted mb-1 font-13"><strong>Fecha de registro :</strong> <span
+                                        class="ms-2"><?php echo $usuario["creado_en"] ?></span></p>
+                            </div>
 
-                                        </div> <!-- end preview-->
+                            
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card -->
 
-
-                                    </div> <!-- end tab-content-->
-
-                                </div> <!-- end card body-->
-                            </div> <!-- end card -->
-                        </div><!-- end col-->
-                    </div><!-- end row-->
+                    <!-- Messages-->
 
 
 
 
+                </div>
+                <!-- container -->
 
-                </div> <!-- container -->
+            </div>
+            <!-- content -->
 
-            </div> <!-- content -->
-
-            <!-- Footer Start -->
-            <?php
-        include ("includes/footer.php");
-        ?>
+             <!-- Footer -->
+             <?php include("includes/footer.php"); ?>
             <!-- end Footer -->
 
         </div>
@@ -1051,32 +977,8 @@ if ($usuario["rol"]!="admin" && $usuario["rol"]!="root") {
             </div>
         </div>
     </div>
-
     <!-- Vendor js -->
     <script src="assets/js/vendor.min.js"></script>
-
-    <!-- Code Highlight js -->
-    <script src="assets/vendor/highlightjs/highlight.pack.min.js"></script>
-    <script src="assets/vendor/clipboard/clipboard.min.js"></script>
-    <script src="assets/js/hyper-syntax.js"></script>
-
-    <!-- Datatables js -->
-    <script src="assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="assets/vendor/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-    <script src="assets/vendor/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="assets/vendor/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
-    <script src="assets/vendor/datatables.net-fixedcolumns-bs5/js/fixedColumns.bootstrap5.min.js"></script>
-    <script src="assets/vendor/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-    <script src="assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="assets/vendor/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
-    <script src="assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
-    <script src="assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="assets/vendor/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-    <script src="assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
-
-    <!-- Datatable Demo Aapp js -->
-    <script src="assets/js/pages/demo.datatable-init.js"></script>
 
     <!-- App js -->
     <script src="assets/js/app.min.js"></script>
@@ -1084,6 +986,6 @@ if ($usuario["rol"]!="admin" && $usuario["rol"]!="root") {
 </body>
 
 
-<!-- Mirrored from coderthemes.com/hyper_2/saas/tables-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 03 Oct 2024 17:05:05 GMT -->
+<!-- Mirrored from coderthemes.com/hyper_2/saas/pages-profile-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 03 Oct 2024 17:04:10 GMT -->
 
 </html>

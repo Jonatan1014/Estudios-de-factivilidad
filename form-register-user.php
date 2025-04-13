@@ -27,7 +27,7 @@ $categoria = [
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 
 <!-- Mirrored from coderthemes.com/hyper_2/saas/form-elements.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 03 Oct 2024 17:04:53 GMT -->

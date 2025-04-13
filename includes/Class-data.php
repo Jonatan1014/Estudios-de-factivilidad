@@ -1,5 +1,5 @@
 <?php
-require('conn ef.php');
+require('conn.php');
 
 class Data extends conectarDB {
     public function __construct() {

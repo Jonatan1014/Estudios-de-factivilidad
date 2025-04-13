@@ -12,7 +12,7 @@ if (isset($_SESSION['email'])) {
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 
 <!-- Mirrored from coderthemes.com/hyper_2/saas/pages-login-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Mar 2025 16:33:12 GMT -->

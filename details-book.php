@@ -764,110 +764,65 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
 
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form action="action/register_loan.php" method="post">
+                                            <form action="action/export-ef.php" method="post">
                                                 <div class="row">
                                                     <div class="mb-3">
+                                                        <div class="bg-primary-subtle p-2 " style="text-align: center;">
+                                                            <code class="link-primary">Descargar Estudio de Factivilidad: <?php echo $datos['codigo_estudio']?>.xlsx</code>
+                                                        </div>
 
-                                                        <input type="text" name="cedula" id="simpleinput"
-                                                            class="form-control" readonly>
+                                                        
                                                     </div>
                                                     <!-- Primera columna -->
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label for="simpleinput" class="form-label">Código
-                                                                estudiante</label>
-                                                            <input type="text" name="cedula" id="simpleinput"
-                                                                class="form-control" required>
-                                                        </div>
 
-                                                        <div class="mb-3">
-                                                            <label for="example-date" class="form-label">Fecha de
-                                                                entrega</label>
-                                                            <input class="form-control" id="fecha-entrega" type="date"
-                                                                name="date" value="<?php echo date('Y-m-d'); ?>"
-                                                                readonly>
-                                                        </div>
-                                                    </div>
 
-                                                    <!-- Segunda columna -->
-                                                    <div class="col-lg-6">
-                                                        <div class="mb-3">
-                                                            <label for="example-date" class="form-label">Fecha de
-                                                                devolución</label>
-                                                            <input class="form-control" name="fecha_entrega"
-                                                                id="fecha-devolucion" type="date" required>
-                                                        </div>
 
-                                                        <div class="mb-3">
-                                                            <label for="simpleinput" class="form-label">Título del
-                                                                libro</label>
-                                                            <input type="text" id="simpleinput" class="form-control"
-                                                                value="<?php echo $datos['titulo']?>" readonly>
-                                                        </div>
+                                                </div>
 
-                                                        <div class="mb-3">
-                                                            <input type="hidden" name="idLibro"
-                                                                value="<?php echo $datos['idLibro']?>" id="simpleinput"
-                                                                class="form-control">
-                                                        </div>
-                                                    </div>
+                                                <!-- Segunda columna -->
+                                                <div class="col-lg-6">
 
-                                                    <!-- Botón de envío -->
-                                                    <div class="mb-3 text-center">
-                                                        <br><br><br>
-                                                        <button type="submit" class="btn btn-primary">Enviar</button>
+                                                    <div class="mb-3">
+
+                                                        <input type="hidden" name="id_estudio"
+                                                            value="<?php echo $datos['id_estudio']?>" id="simpleinput"
+                                                            class="form-control" style="text-align: center;">
                                                     </div>
                                                 </div>
-                                            </form>
+
+                                                <!-- Botón de envío -->
+                                                <div class="mb-3 text-center">
+                                                    <br><br><br>
+                                                    <button type="submit" class="btn btn-soft-primary">Descargar</button>
+                                                </div>
                                         </div>
+                                        </form>
                                     </div>
-
-                                    <script>
-                                    // Obtenemos las fechas de entrega y devolución
-                                    const fechaEntregaInput = document.getElementById('fecha-entrega');
-                                    const fechaDevolucionInput = document.getElementById('fecha-devolucion');
-
-                                    // Convertir la fecha actual a un formato válido de input (YYYY-MM-DD)
-                                    const fechaEntrega = new Date(fechaEntregaInput.value);
-
-                                    // Calcular fecha mínima y máxima para la devolución
-                                    const fechaMinimaDevolucion = new Date(fechaEntrega);
-                                    fechaMinimaDevolucion.setDate(fechaMinimaDevolucion.getDate() +
-                                        1); // Al menos 1 día después
-
-                                    const fechaMaximaDevolucion = new Date(fechaEntrega);
-                                    fechaMaximaDevolucion.setDate(fechaMaximaDevolucion.getDate() +
-                                        3); // Máximo 3 días después
-
-                                    // Convertir las fechas a formato de input (YYYY-MM-DD)
-                                    const formatoFecha = (fecha) => fecha.toISOString().split('T')[0];
-
-                                    // Establecer los valores de mínimo y máximo en el campo de fecha de devolución
-                                    fechaDevolucionInput.min = formatoFecha(fechaMinimaDevolucion);
-                                    fechaDevolucionInput.max = formatoFecha(fechaMaximaDevolucion);
-                                    </script>
-
-
-                                    </p>
                                 </div>
+
+
+
+
+                                </p>
                             </div>
                         </div>
                     </div>
-                    <!-- end page title -->
+                </div>
+                <!-- end page title -->
 
-                </div> <!-- container -->
+            </div> <!-- container -->
 
-            </div> <!-- content -->
+        </div> <!-- content -->
 
-            <!-- Footer -->
-            <?php include("includes/footer.php"); ?>
-            <!-- end Footer -->
+        <!-- Footer -->
+        <?php include("includes/footer.php"); ?>
+        <!-- end Footer -->
 
-        </div>
+    </div>
 
-        <!-- ============================================================== -->
-        <!-- End Page content -->
-        <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
 
     </div>
     <!-- END wrapper -->

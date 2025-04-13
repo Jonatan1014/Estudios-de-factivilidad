@@ -10,7 +10,7 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 // Obtener ID del estudio
-$id_estudio = $_GET['id_estudio'] ?? die('ID de estudio no proporcionado');
+$id_estudio = $_POST['id_estudio'] ?? die('ID de estudio no proporcionado');
 
 // Instanciar clase y obtener datos
 $dataHandler = new Data();

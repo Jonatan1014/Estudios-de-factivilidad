@@ -1,6 +1,6 @@
 <?php
 require '../vendor/autoload.php';
-require '../includes/Class-data.php'; // Asegúrate de incluir tu clase
+require '../includes/Class-data.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -9,14 +9,11 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
-// Obtener ID del estudio
 $id_estudio = $_POST['id_estudio'] ?? die('ID de estudio no proporcionado');
 
-// Instanciar clase y obtener datos
 $dataHandler = new Data();
 $estudio = $dataHandler->listarEF_IDFull($id_estudio);
 
-// Crear nuevo documento
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 
@@ -62,7 +59,6 @@ $sectionHeaderStyle = [
 ];
 
 // ================== CONFIGURACIÓN INICIAL ==================
-// Configurar área global
 $sheet->getStyle('B3:L3')->applyFromArray($borderStyle);
 
 // Encabezado con logo y título
@@ -70,10 +66,8 @@ $sheet->mergeCells('C3:K5');
 $sheet->setCellValue('C3', 'ESTUDIO DE FACTIBILIDAD')
       ->getStyle('C3:K5')->applyFromArray($headerStyle);
 
-// Insertar logo
 $drawing = new Drawing();
 $drawing->setName('Logo');
-$drawing->setDescription('Logo empresa');
 $drawing->setPath('../assets/images/logo-talleres-unidos.png');
 $drawing->setCoordinates('C3');
 $drawing->setOffsetX(10);
@@ -106,20 +100,16 @@ $sheet->setCellValue('C7', 'Cliente:')
       ->mergeCells('D11:H11')
       ->setCellValue('D11', $estudio['doc_referencia']);
 
-// Formatear celdas
 $sheet->getStyle('K7')->getNumberFormat()->setFormatCode('dd/mm/yy');
 $sheet->getStyle('D10')->getNumberFormat()->setFormatCode('#,##0');
 
-// ================== FUNCIÓN PARA SECCIONES ==================
+// ================== FUNCIÓN PARA SECCIONES (MODIFICADA) ==================
 function agregarSeccion($sheet, $row, $seccion, $items, $sectionHeaderStyle) {
-    // Encabezado de sección
     $sheet->mergeCells("C{$row}:K{$row}")
           ->setCellValue("C{$row}", $seccion['nombre'])
           ->getStyle("C{$row}:K{$row}")->applyFromArray($sectionHeaderStyle);
-    
     $row++;
     
-    // Encabezados de tabla con color
     $sheet->setCellValue("C{$row}", 'COD')
     ->setCellValue("D{$row}", 'DESCRIPCIÓN')
     ->mergeCells("D{$row}:F{$row}")
@@ -129,28 +119,13 @@ function agregarSeccion($sheet, $row, $seccion, $items, $sectionHeaderStyle) {
     ->setCellValue("J{$row}", 'TARIFA')
     ->setCellValue("K{$row}", 'SUBTOTAL')
     ->getStyle("C{$row}:K{$row}")->applyFromArray([
-        'font' => [
-            'bold' => true,
-            'color' => ['rgb' => '000000'] // Texto blanco
-        ],
-        'fill' => [
-            'fillType' => Fill::FILL_SOLID,
-            'startColor' => ['rgb' => '92D050'] // Mismo azul que el encabezado principal
-        ],
-        'borders' => [
-            'bottom' => [
-                'borderStyle' => Border::BORDER_THIN,
-                'color' => ['rgb' => '000000']
-            ]
-        ],
-        'alignment' => [
-            'horizontal' => Alignment::HORIZONTAL_CENTER
-        ]
+        'font' => ['bold' => true, 'color' => ['rgb' => '000000']],
+        'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => '92D050']],
+        'borders' => ['bottom' => ['borderStyle' => Border::BORDER_THIN]],
+        'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER]
     ]);
-        
     $row++;
     
-    // Items de la sección
     $startRow = $row;
     foreach ($items as $item) {
         $sheet->setCellValue("C{$row}", $item['codigo_item'])
@@ -163,7 +138,9 @@ function agregarSeccion($sheet, $row, $seccion, $items, $sectionHeaderStyle) {
               ->setCellValue("K{$row}", "=H{$row}*I{$row}*J{$row}");
         $row++;
     }
-    
+
+
+
     // Subtotales con dos colores
     $sheet->mergeCells("H{$row}:J{$row}")
     ->setCellValue("H{$row}", 'SUBTOTAL '.strtoupper($seccion['nombre']))
@@ -192,32 +169,109 @@ function agregarSeccion($sheet, $row, $seccion, $items, $sectionHeaderStyle) {
     'startColor' => ['rgb' => '92D050'] // Amarillo destacado
     ]
     ]);
+
     
-    return $row + 2;
+    $subtotalCell = "K{$row}";
+    $row++;
+
+    return [
+        'next_row' => $row + 2,
+        'subtotal_cell' => $subtotalCell
+    ];
 }
 
-// ================== GENERAR SECCIONES ==================
+// ================== GENERAR SECCIONES Y CAPTURAR SUBTOTALES ==================
 $currentRow = 13;
+$subtotalCells = [];
+
 foreach ($estudio['secciones'] as $seccion) {
-    $currentRow = agregarSeccion(
-        $sheet, 
-        $currentRow, 
-        $seccion, 
-        $seccion['items'],
-        $sectionHeaderStyle // Pasamos el estilo como parámetro
-    );
+    $result = agregarSeccion($sheet, $currentRow, $seccion, $seccion['items'], $sectionHeaderStyle);
+    $currentRow = $result['next_row'];
+    $subtotalCells[] = $result['subtotal_cell'];
 }
+
+// ================== TABLA EPITOME ==================
+$currentRow += 2; // Espacio antes de la tabla
+$epitomeStartRow = $currentRow;
+
+// Encabezado EPITOME
+$sheet->mergeCells("C{$epitomeStartRow}:K{$epitomeStartRow}")
+      ->setCellValue("C{$epitomeStartRow}", 'EPÍTOME')
+      ->getStyle("C{$epitomeStartRow}:K{$epitomeStartRow}")->applyFromArray($sectionHeaderStyle);
+$currentRow++;
+
+$numSections = count($estudio['secciones']);
+$costoAiuRow = $epitomeStartRow + 1 + $numSections + 2;
+
+// Filas de cada sección en EPITOME
+foreach ($estudio['secciones'] as $index => $seccion) {
+    $subtotalCell = $subtotalCells[$index];
+    $sheet->mergeCells("C{$currentRow}:H{$currentRow}")
+          ->setCellValue("C{$currentRow}", $seccion['nombre'])
+          ->setCellValue("I{$currentRow}", "={$subtotalCell}")
+          ->setCellValue("J{$currentRow}", "=I{$currentRow}/\$I\${$costoAiuRow}*100");
+    $currentRow++;
+}
+
+// TOTAL COSTOS DIRECTOS
+$totalDirectosRow = $currentRow;
+$sheet->mergeCells("C{$totalDirectosRow}:H{$totalDirectosRow}")
+      ->setCellValue("C{$totalDirectosRow}", 'TOTAL COSTOS DIRECTOS')
+      ->setCellValue("I{$totalDirectosRow}", "=SUM(" . implode(',', $subtotalCells) . ")")
+      ->setCellValue("J{$totalDirectosRow}", "=I{$totalDirectosRow}/\$I\${$costoAiuRow}*100");
+$currentRow++;
+
+// AIU
+$aiuRow = $currentRow;
+$sheet->mergeCells("C{$aiuRow}:H{$aiuRow}")
+      ->setCellValue("C{$aiuRow}", 'AIU')
+      ->setCellValue("I{$aiuRow}", "=I{$totalDirectosRow}*0.3")
+      ->setCellValue("J{$aiuRow}", "=I{$aiuRow}/\$I\${$costoAiuRow}*100");
+$currentRow++;
+
+// COSTO + AIU
+$costoAiuRow = $currentRow;
+$sheet->mergeCells("C{$costoAiuRow}:H{$costoAiuRow}")
+      ->setCellValue("C{$costoAiuRow}", 'COSTO + AIU')
+      ->setCellValue("I{$costoAiuRow}", "=I{$totalDirectosRow} + I{$aiuRow}")
+      ->setCellValue("J{$costoAiuRow}", "=100");
+$currentRow++;
+
+// Estilos para EPITOME
+$epitomeEndRow = $costoAiuRow;
+$sheet->getStyle("C{$epitomeStartRow}:K{$epitomeEndRow}")->applyFromArray([
+    'borders' => ['allBorders' => ['borderStyle' => Border::BORDER_THIN]]
+]);
+
+$sheet->getStyle("I{$epitomeStartRow}:I{$epitomeEndRow}")->getNumberFormat()->setFormatCode('$#,##0.00');
+$sheet->getStyle("J{$epitomeStartRow}:J{$epitomeEndRow}")->getNumberFormat()->setFormatCode('0.00%');
+
+// Estilos para filas especiales
+$totalStyle = [
+    'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => 'D9D9D9']],
+    'font' => ['bold' => true]
+];
+$sheet->getStyle("C{$totalDirectosRow}:J{$totalDirectosRow}")->applyFromArray($totalStyle);
+$sheet->getStyle("C{$aiuRow}:J{$aiuRow}")->applyFromArray($totalStyle);
+
+$costoAiuStyle = [
+    'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => '92D050']],
+    'font' => ['bold' => true]
+];
+$sheet->getStyle("C{$costoAiuRow}:J{$costoAiuRow}")->applyFromArray($costoAiuStyle);
+
+// Ajustar anchos de columnas
+$sheet->getColumnDimension('C')->setWidth(40);
+$sheet->getColumnDimension('I')->setWidth(15);
+$sheet->getColumnDimension('J')->setWidth(15);
 
 // ================== CONFIGURACIÓN FINAL ==================
-// Formato monetario
 $lastRow = $sheet->getHighestRow();
 $sheet->getStyle("J15:K{$lastRow}")->getNumberFormat()->setFormatCode('$#,##0.00');
 
-// Proteger celdas
 $sheet->getProtection()->setSheet(true);
 $sheet->getStyle('C15:J'.($lastRow - 1))->getProtection()->setLocked(false);
 
-// Autoajustar columnas
 foreach (range('C', 'K') as $col) {
     $sheet->getColumnDimension($col)->setAutoSize(true);
 }

@@ -101,7 +101,7 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
 
                                 <li class="nav-item">
                                     <a href="#settings" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
-                                        <i class="mdi mdi-playlist-edit d-md-none d-block"></i>
+                                        <i class="mdi mdi-file-download-outline d-md-none d-block"></i>
                                         <span class="d-none d-md-block">Exportar Estudio de Factivilidad</span>
                                     </a>
                                 </li>

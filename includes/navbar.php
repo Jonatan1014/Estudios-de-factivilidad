@@ -21,20 +21,20 @@ $usuario = $usuario->datosUser_email($_SESSION['email']);
                 <!-- Logo light -->
                 <a href="index.php" class="logo-light">
                     <span class="logo-lg">
-                        <img src="assets/images/logo_udi.png" alt="logo">
+                        <img src="assets/images/logo-dark.png" alt="logo">
                     </span>
                     <span class="logo-sm">
-                        <img src="assets/images/logo_udi.png" alt="small logo">
+                        <img src="assets/images/logo-sm.png" alt="small logo">
                     </span>
                 </a>
 
                 <!-- Logo Dark -->
                 <a href="index.php" class="logo-dark">
                     <span class="logo-lg">
-                        <img src="assets/images/logo_udi.png" alt="dark logo">
+                        <img src="assets/images/logo-dark.png" alt="dark logo">
                     </span>
                     <span class="logo-sm">
-                        <img src="assets/images/logo_udi.png" alt="small logo">
+                        <img src="assets/images/logo-dark-sm.png" alt="small logo">
                     </span>
                 </a>
             </div>
@@ -118,7 +118,7 @@ $usuario = $usuario->datosUser_email($_SESSION['email']);
                     </a>
 
                     <!-- item-->
-                    <a href="action/destroy_session.php" class="dropdown-item">
+                    <a href="action/destroy-session.php" class="dropdown-item">
                         <i class="mdi mdi-logout me-1"></i>
                         <span>Cerrar Sesion</span>
                     </a>

@@ -58,6 +58,11 @@ if ($result->num_rows > 0) {
         echo '            </div>';
         echo '        </div>';
         
+        // Nueva sección para el alcance
+        echo '        <div class="px-3 pb-3 text-center">';
+        echo '            <small class="text-muted">' . htmlspecialchars(substr($row['alcance'], 0, 50)) . (strlen($row['alcance']) > 50 ? '...' : '') . '</small>';
+        echo '        </div>';
+        
         echo '        <div class="card-footer">';
         echo '            <form action="details-book.php" method="POST">';
         echo '                <input type="hidden" name="id_estudio" value="' . $row['id_estudio'] . '">';

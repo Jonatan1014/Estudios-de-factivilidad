@@ -54,6 +54,10 @@ $sectionHeaderStyle = [
     'fill' => [
         'fillType' => Fill::FILL_SOLID,
         'startColor' => ['rgb' => '000000']
+    ],
+    'alignment' => [
+        'horizontal' => Alignment::HORIZONTAL_CENTER,
+        'vertical' => Alignment::VERTICAL_CENTER
     ]
 ];
 
@@ -160,14 +164,34 @@ function agregarSeccion($sheet, $row, $seccion, $items, $sectionHeaderStyle) {
         $row++;
     }
     
-    // Subtotales
+    // Subtotales con dos colores
     $sheet->mergeCells("H{$row}:J{$row}")
-          ->setCellValue("H{$row}", 'SUBTOTAL '.strtoupper($seccion['nombre']))
-          ->setCellValue("K{$row}", "=SUM(K{$startRow}:K".($row-1).")")
-          ->getStyle("H{$row}:K{$row}")->applyFromArray([
-              'font' => ['bold' => true],
-              'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => 'F8CBAD']]
-          ]);
+    ->setCellValue("H{$row}", 'SUBTOTAL '.strtoupper($seccion['nombre']))
+    ->setCellValue("K{$row}", "=SUM(K{$startRow}:K".($row-1).")");
+
+    // Estilo para el texto del subtotal
+    $sheet->getStyle("H{$row}:J{$row}")->applyFromArray([
+    'font' => [
+    'bold' => true,
+    'color' => ['rgb' => 'FFFFFF'] // Texto blanco
+    ],
+    'fill' => [
+    'fillType' => Fill::FILL_SOLID,
+    'startColor' => ['rgb' => '000000'] // Azul corporativo
+    ]
+    ]);
+
+    // Estilo para el valor del subtotal
+    $sheet->getStyle("K{$row}")->applyFromArray([
+    'font' => [
+    'bold' => true,
+    'color' => ['rgb' => '000000'] // Texto negro
+    ],
+    'fill' => [
+    'fillType' => Fill::FILL_SOLID,
+    'startColor' => ['rgb' => '92D050'] // Amarillo destacado
+    ]
+    ]);
     
     return $row + 2;
 }

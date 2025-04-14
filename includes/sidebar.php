@@ -21,7 +21,7 @@ $usuario = $usuario->datosUser_email($_SESSION['email']);
     <!-- Brand Logo Light -->
     <a href="index.php" class="logo logo-light">
         <span class="logo-lg">
-            <img src="assets/images/logo-dark.png" alt="logo" width="80%" height="90%">
+            <img src="assets/images/logo-dark.png" alt="logo" width="80%" height="80%" >
         </span>
         <span class="logo-sm">
             <img src="assets/images/logo-sm.png" alt="small logo">
@@ -31,7 +31,7 @@ $usuario = $usuario->datosUser_email($_SESSION['email']);
     <!-- Brand Logo Dark -->
     <a href="index.php" class="logo logo-dark">
         <span class="logo-lg">
-            <img src="assets/images/logo-dark.png" alt="dark logo">
+            <img src="assets/images/logo-dark.png" alt="dark logo" width="80%" height="80%" >
         </span>
         <span class="logo-sm">
             <img src="assets/images/logo-dark-sm.png" alt="small logo">

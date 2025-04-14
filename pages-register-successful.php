@@ -33,7 +33,7 @@
                 <!-- Logo -->
                 <div class="auth-brand text-center text-lg-start">
                     <a href="index.html" class="logo-dark">
-                        <span><img src="assets/images/logo-dark.png" alt="dark logo" height="22"></span>
+                        <span><img src="assets/images/logo-dark.png" alt="dark logo" height="50"></span>
                     </a>
                     <a href="index.html" class="logo-light">
                         <span><img src="assets/images/logo.png" alt="logo" height="22"></span>
@@ -43,8 +43,8 @@
                 <div class="my-auto">
                     <!-- title-->
                     <div class="text-center">
-                        <h4 class="mt-0">See You Again !</h4>
-                        <p class="text-muted mb-4">You are now successfully sign out.</p>
+                        <h4 class="mt-0">Completado correctamente !</h4>
+                        <p class="text-muted mb-4">Listo! haz creado tu cuenta sin problemas 😎👌</p>
                     </div>
 
                     <!-- Logout icon -->
@@ -65,7 +65,7 @@
 
                 <!-- Footer-->
                 <footer class="footer footer-alt">
-                    <p class="text-muted">Back to <a href="pages-login.php" class="text-muted ms-1"><b>Log In</b></a></p>
+                    <p class="text-muted">Regresar e <a href="pages-login.php" class="text-muted ms-1"><b>Iniciar Sesion</b></a></p>
                 </footer>
 
             </div> <!-- end .card-body -->
@@ -75,11 +75,9 @@
         <!-- Auth fluid right content -->
         <div class="auth-fluid-right text-center">
             <div class="auth-user-testimonial">
-                <h2 class="mb-3">I love the color!</h2>
-                <p class="lead"><i class="mdi mdi-format-quote-open"></i> It's a elegent templete. I love it very much! . <i class="mdi mdi-format-quote-close"></i>
-                </p>
-                <p>
-                    - Hyper Admin User
+                <h2 class="mb-3">Ingenieria en equipo</h2>
+                <p class="lead"><i class="mdi mdi-format-quote-open"></i> Generando progreso desde 1956
+                    . <i class="mdi mdi-format-quote-close"></i>
                 </p>
             </div> <!-- end auth-user-testimonial-->
         </div>

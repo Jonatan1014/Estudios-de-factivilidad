@@ -75,6 +75,9 @@ $sheet->getRowDimension(4)->setRowHeight(40); // Fila 4
 $sheet->getRowDimension(5)->setRowHeight(40); // Fila 5
 
 
+
+
+
 $drawing = new Drawing();
 $drawing->setName('Logo');
 $drawing->setPath('../assets/images/logo-talleres-unidos.png');
@@ -233,9 +236,9 @@ $currentRow += 2;
 $epitomeStartRow = $currentRow;
 
 // Encabezado EPITOME (Amarillo FFC000)
-$sheet->mergeCells("H{$epitomeStartRow}:K{$epitomeStartRow}")
-      ->setCellValue("H{$epitomeStartRow}", 'EPÍTOME')
-      ->getStyle("H{$epitomeStartRow}:K{$epitomeStartRow}")
+$sheet->mergeCells("I{$epitomeStartRow}:J{$epitomeStartRow}")
+      ->setCellValue("I{$epitomeStartRow}", 'EPÍTOME')
+      ->getStyle("I{$epitomeStartRow}:J{$epitomeStartRow}")
       ->applyFromArray([
           'font' => ['bold' => true, 'color' => ['rgb' => '000000']],
           'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => 'FFC000']],
@@ -249,12 +252,12 @@ $costoAiuRow = $epitomeStartRow + $numSections + 3;
 // Filas de cada sección en EPITOME
 foreach ($estudio['secciones'] as $index => $seccion) {
     $subtotalCell = $subtotalCells[$index];
-    $sheet->setCellValue("H{$currentRow}", $seccion['nombre'])
-          ->setCellValue("I{$currentRow}", "={$subtotalCell}")
-          ->setCellValue("J{$currentRow}", "=I{$currentRow}/\$I\${$costoAiuRow}*100");
+    $sheet->setCellValue("I{$currentRow}", $seccion['nombre'])
+          ->setCellValue("J{$currentRow}", "={$subtotalCell}")
+          ->setCellValue("K{$currentRow}", "=J{$currentRow}/\$J\${$costoAiuRow}*100");
     
     // Color verde 92D050 para la columna de precios (I)
-    $sheet->getStyle("I{$currentRow}")->applyFromArray([
+    $sheet->getStyle("J{$currentRow}")->applyFromArray([
         'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => '92D050']]
     ]);
     
@@ -263,53 +266,53 @@ foreach ($estudio['secciones'] as $index => $seccion) {
 
 // TOTAL COSTOS DIRECTOS
 $totalDirectosRow = $currentRow;
-$sheet->setCellValue("H{$totalDirectosRow}", 'TOTAL COSTOS DIRECTOS')
-      ->setCellValue("I{$totalDirectosRow}", "=SUM(" . implode(',', $subtotalCells) . ")")
-      ->setCellValue("J{$totalDirectosRow}", "=I{$totalDirectosRow}/\$I\${$costoAiuRow}*100");
+$sheet->setCellValue("I{$totalDirectosRow}", 'TOTAL COSTOS DIRECTOS')
+      ->setCellValue("J{$totalDirectosRow}", "=SUM(" . implode(',', $subtotalCells) . ")")
+      ->setCellValue("K{$totalDirectosRow}", "=J{$totalDirectosRow}/\$J\${$costoAiuRow}*100");
 
 // Aplicar estilo al total
-$sheet->getStyle("H{$totalDirectosRow}:J{$totalDirectosRow}")->applyFromArray([
+$sheet->getStyle("I{$totalDirectosRow}:J{$totalDirectosRow}")->applyFromArray([
     'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => 'D9D9D9']],
     'font' => ['bold' => true]
 ]);
-$sheet->getStyle("I{$totalDirectosRow}")->applyFromArray([
+$sheet->getStyle("J{$totalDirectosRow}")->applyFromArray([
     'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => '92D050']]
 ]);
 
 $currentRow++;
 // AIU
 $aiuRow = $currentRow;
-$sheet->setCellValue("H{$aiuRow}", 'AIU')
-      ->setCellValue("I{$aiuRow}", "=I{$totalDirectosRow}*0.3")
-      ->setCellValue("J{$aiuRow}", "=I{$aiuRow}/\$I\${$costoAiuRow}*100");
-$sheet->getStyle("I{$aiuRow}")->applyFromArray([
+$sheet->setCellValue("I{$aiuRow}", 'AIU')
+      ->setCellValue("J{$aiuRow}", "=J{$totalDirectosRow}*0.3")
+      ->setCellValue("K{$aiuRow}", "=J{$aiuRow}/\$J\${$costoAiuRow}*100");
+$sheet->getStyle("J{$aiuRow}")->applyFromArray([
     'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => '92D050']]
 ]);
 
 $currentRow++;
 // COSTO + AIU
 $costoAiuRow = $currentRow;
-$sheet->setCellValue("H{$costoAiuRow}", 'COSTO + AIU')
-      ->setCellValue("I{$costoAiuRow}", "=I{$totalDirectosRow} + I{$aiuRow}")
-      ->setCellValue("J{$costoAiuRow}", "=100");
-$sheet->getStyle("H{$costoAiuRow}:J{$costoAiuRow}")->applyFromArray([
+$sheet->setCellValue("I{$costoAiuRow}", 'COSTO + AIU')
+      ->setCellValue("J{$costoAiuRow}", "=J{$totalDirectosRow} + J{$aiuRow}")
+      ->setCellValue("K{$costoAiuRow}", "=100");
+$sheet->getStyle("I{$costoAiuRow}:J{$costoAiuRow}")->applyFromArray([
     'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => '92D050']],
     'font' => ['bold' => true]
 ]);
 
 // Ajustar bordes y formato
 $epitomeEndRow = $costoAiuRow;
-$sheet->getStyle("H{$epitomeStartRow}:K{$epitomeEndRow}")->applyFromArray([
+$sheet->getStyle("I{$epitomeStartRow}:J{$epitomeEndRow}")->applyFromArray([
     'borders' => ['allBorders' => ['borderStyle' => Border::BORDER_THIN]]
 ]);
-$sheet->getStyle("I{$epitomeStartRow}:I{$epitomeEndRow}")->getNumberFormat()->setFormatCode('$#,##0.00');
-$sheet->getStyle("J{$epitomeStartRow}:J{$epitomeEndRow}")->getNumberFormat()->setFormatCode('0.00%');
+$sheet->getStyle("J{$epitomeStartRow}:J{$epitomeEndRow}")->getNumberFormat()->setFormatCode('$#,##0.00');
+$sheet->getStyle("K{$epitomeStartRow}:K{$epitomeEndRow}")->getNumberFormat()->setFormatCode('0.00%');
 
 // Ajustar anchos de columnas
-$sheet->getColumnDimension('H')->setWidth(30); // Nombre de sección
-$sheet->getColumnDimension('I')->setWidth(15); // Subtotal
-$sheet->getColumnDimension('J')->setWidth(15); // Porcentaje
-$sheet->getColumnDimension('K')->setWidth(15); // Reserva (si es necesario)
+$sheet->getColumnDimension('I')->setWidth(30); // Nombre de sección
+$sheet->getColumnDimension('J')->setWidth(15); // Subtotal
+$sheet->getColumnDimension('K')->setWidth(15); // Porcentaje
+$sheet->getColumnDimension('L')->setWidth(15); // Reserva (si es necesario)
 
 // ================== CONFIGURACIÓN FINAL ==================
 $lastRow = $sheet->getHighestRow();

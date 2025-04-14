@@ -83,20 +83,56 @@ if (!isset($_SESSION['email'])) {
                     </div>
                     <!-- end page title -->
 
-                    <div class="app-search">
-                        <form action="" method="POST">
-                            <div class="mb-2 w-100 position-relative">
-                                <input type="search" name="fruta" class="form-control" placeholder="Buscar Estudio...">
-                                <span class="mdi mdi-magnify search-icon"></span>
+                    <div class="app-filters mb-4">
+                        <form id="filtersForm">
+                            <!-- Filtros -->
+                            <div class="row g-3">
+                                <div class="col-md-6 col-lg-4">
+                                    <label>Rango de Fechas</label>
+                                    <div class="input-group">
+                                        <input type="date" name="fecha_inicio" class="form-control">
+                                        <span class="input-group-text">a</span>
+                                        <input type="date" name="fecha_fin" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-lg-4">
+                                    <label>Código de Proyecto</label>
+                                    <input type="text" name="codigo_proyecto" class="form-control">
+                                </div>
+
+                                <div class="col-md-6 col-lg-4">
+                                    <label>Cliente</label>
+                                    <input type="text" name="cliente" class="form-control">
+                                </div>
+
+                                <div class="col-md-6 col-lg-4">
+                                    <label>Alcance</label>
+                                    <input type="text" name="alcance" class="form-control">
+                                </div>
+
+                                <div class="col-md-6 col-lg-4">
+                                    <label>Dimensiones</label>
+                                    <input type="text" name="dimensiones" class="form-control">
+                                </div>
+
+                                <div class="col-md-6 col-lg-4">
+                                    <label>Tipo</label>
+                                    <input type="text" name="tipo" class="form-control">
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <button type="button" class="btn btn-secondary" onclick="limpiarFiltros()">
+                                            <i class="mdi mdi-broom"></i> Limpiar Filtros
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
+
                         </form>
                     </div>
 
-                    <div class="row">
-                        <div id="resultados" class="row">
-                            <!-- Aquí se insertarán los resultados -->
-                        </div>
-                    </div>
+                    <div id="resultados" class="row"></div>
 
                 </div> <!-- container -->
             </div> <!-- content -->
@@ -964,14 +1000,22 @@ if (!isset($_SESSION['email'])) {
 
     <script>
     $(document).ready(function() {
-        // Función para cargar todos los libros al iniciar
-        function cargarLibros(fruta = '') {
+        function cargarLibros() {
+            // Obtener valores de los filtros
+            const filters = {
+                fecha_inicio: $('input[name="fecha_inicio"]').val(),
+                fecha_fin: $('input[name="fecha_fin"]').val(),
+                codigo_proyecto: $('input[name="codigo_proyecto"]').val(),
+                cliente: $('input[name="cliente"]').val(),
+                alcance: $('input[name="alcance"]').val(),
+                dimensiones: $('input[name="dimensiones"]').val(),
+                tipo: $('input[name="tipo"]').val()
+            };
+
             $.ajax({
                 url: 'action/search_book.php',
                 type: 'POST',
-                data: {
-                    fruta: fruta
-                },
+                data: filters,
                 success: function(response) {
                     $('#resultados').html(response);
                 },
@@ -983,13 +1027,23 @@ if (!isset($_SESSION['email'])) {
             });
         }
 
-        // Cargar todos los libros al iniciar la página
+        // Nueva función para limpiar filtros
+        window.limpiarFiltros = function() {
+            // Limpiar todos los campos del formulario
+            $('#filtersForm input').each(function() {
+                $(this).val('');
+            });
+
+            // Forzar recarga de datos sin filtros
+            cargarLibros();
+        }
+
+        // Cargar datos iniciales
         cargarLibros();
 
-        // Función para hacer la búsqueda dinámica
-        $('input[name="fruta"]').on('keyup', function() {
-            var fruta = $(this).val();
-            cargarLibros(fruta); // Hacer la búsqueda en función del término ingresado
+        // Eventos que disparan la búsqueda
+        $('#filtersForm input').on('keyup change', function() {
+            cargarLibros();
         });
     });
     </script>

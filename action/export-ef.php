@@ -146,28 +146,38 @@ $sheet->getStyle('D10')->getNumberFormat()->setFormatCode('#,##0');
 
 // ================== FUNCIÓN PARA SECCIONES (MODIFICADA) ==================
 function agregarSeccion($sheet, $row, $seccion, $items, $sectionHeaderStyle) {
+    $startHeaderRow = $row; // Inicio de la sección
+
+    // Cabecera de la sección
     $sheet->mergeCells("C{$row}:K{$row}")
           ->setCellValue("C{$row}", $seccion['nombre'])
-          ->getStyle("C{$row}:K{$row}")->applyFromArray($sectionHeaderStyle);
+          ->getStyle("C{$row}:K{$row}")->applyFromArray([
+              'borders' => ['allBorders' => ['borderStyle' => Border::BORDER_MEDIUM]],
+              'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => '000000']],
+              'font' => ['color' => ['rgb' => 'FFFFFF'], 'bold' => true]
+          ]);
     $row++;
-    
+
+    // Encabezados de columnas
     $sheet->setCellValue("C{$row}", 'COD')
-    ->setCellValue("D{$row}", 'DESCRIPCIÓN')
-    ->mergeCells("D{$row}:F{$row}")
-    ->setCellValue("G{$row}", 'UND')
-    ->setCellValue("H{$row}", 'CANTIDAD')
-    ->setCellValue("I{$row}", 'No PIEZAS')
-    ->setCellValue("J{$row}", 'TARIFA')
-    ->setCellValue("K{$row}", 'SUBTOTAL')
-    ->getStyle("C{$row}:K{$row}")->applyFromArray([
+          ->setCellValue("D{$row}", 'DESCRIPCIÓN')
+          ->mergeCells("D{$row}:F{$row}")
+          ->setCellValue("G{$row}", 'UND')
+          ->setCellValue("H{$row}", 'CANTIDAD')
+          ->setCellValue("I{$row}", 'No PIEZAS')
+          ->setCellValue("J{$row}", 'TARIFA')
+          ->setCellValue("K{$row}", 'SUBTOTAL');
+    
+    $sheet->getStyle("C{$row}:K{$row}")->applyFromArray([
         'font' => ['bold' => true, 'color' => ['rgb' => '000000']],
         'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => '92D050']],
-        'borders' => ['bottom' => ['borderStyle' => Border::BORDER_THIN]],
+        'borders' => ['allBorders' => ['borderStyle' => Border::BORDER_THIN]],
         'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER]
     ]);
     $row++;
-    
-    $startRow = $row;
+
+    // Items con bordes
+    $startItemRow = $row;
     foreach ($items as $item) {
         $sheet->setCellValue("C{$row}", $item['codigo_item'])
               ->setCellValue("D{$row}", $item['descripcion'])
@@ -177,47 +187,39 @@ function agregarSeccion($sheet, $row, $seccion, $items, $sectionHeaderStyle) {
               ->setCellValue("I{$row}", $item['no_piezas'])
               ->setCellValue("J{$row}", $item['tarifa'])
               ->setCellValue("K{$row}", "=H{$row}*I{$row}*J{$row}");
+        
+        // Bordes solo para las filas de items
+        $sheet->getStyle("C{$row}:K{$row}")->applyFromArray([
+            'borders' => ['allBorders' => ['borderStyle' => Border::BORDER_THIN]]
+        ]);
         $row++;
     }
+    $endItemRow = $row - 1; // Última fila de items
 
-
-
-    // Subtotales con dos colores
-    $sheet->mergeCells("H{$row}:J{$row}")
-    ->setCellValue("H{$row}", 'SUBTOTAL '.strtoupper($seccion['nombre']))
-    ->setCellValue("K{$row}", "=SUM(K{$startRow}:K".($row-1).")");
-
-    // Estilo para el texto del subtotal
-    $sheet->getStyle("H{$row}:J{$row}")->applyFromArray([
-    'font' => [
-    'bold' => true,
-    'color' => ['rgb' => 'FFFFFF'] // Texto blanco
-    ],
-    'fill' => [
-    'fillType' => Fill::FILL_SOLID,
-    'startColor' => ['rgb' => '000000'] // Azul corporativo
-    ]
-    ]);
-
-    // Estilo para el valor del subtotal
-    $sheet->getStyle("K{$row}")->applyFromArray([
-    'font' => [
-    'bold' => true,
-    'color' => ['rgb' => '000000'] // Texto negro
-    ],
-    'fill' => [
-    'fillType' => Fill::FILL_SOLID,
-    'startColor' => ['rgb' => '92D050'] // Amarillo destacado
-    ]
-    ]);
-
+    // Subtotal (sin bordes de la tabla principal)
+    $subtotalRow = $row;
+    $sheet->mergeCells("H{$subtotalRow}:J{$subtotalRow}")
+          ->setCellValue("H{$subtotalRow}", 'SUBTOTAL '.strtoupper($seccion['nombre']))
+          ->setCellValue("K{$subtotalRow}", "=SUM(K{$startItemRow}:K{$endItemRow})");
     
-    $subtotalCell = "K{$row}";
-    $row++;
+    // Estilos para el subtotal
+    $sheet->getStyle("H{$subtotalRow}:J{$subtotalRow}")->applyFromArray([
+        'font' => ['bold' => true, 'color' => ['rgb' => 'FFFFFF']],
+        'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => '000000']]
+    ]);
+    $sheet->getStyle("K{$subtotalRow}")->applyFromArray([
+        'font' => ['bold' => true, 'color' => ['rgb' => '000000']],
+        'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => '92D050']]
+    ]);
+
+    // Borde exterior SOLO hasta los items (excluyendo el subtotal)
+    $sheet->getStyle("C{$startHeaderRow}:K{$endItemRow}")->applyFromArray([
+        'borders' => ['outline' => ['borderStyle' => Border::BORDER_MEDIUM]]
+    ]);
 
     return [
         'next_row' => $row + 2,
-        'subtotal_cell' => $subtotalCell
+        'subtotal_cell' => "K{$subtotalRow}"
     ];
 }
 

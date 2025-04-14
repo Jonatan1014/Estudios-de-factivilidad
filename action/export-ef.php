@@ -154,7 +154,11 @@ function agregarSeccion($sheet, $row, $seccion, $items, $sectionHeaderStyle) {
           ->getStyle("C{$row}:K{$row}")->applyFromArray([
               'borders' => ['allBorders' => ['borderStyle' => Border::BORDER_MEDIUM]],
               'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => '000000']],
-              'font' => ['color' => ['rgb' => 'FFFFFF'], 'bold' => true]
+              'font' => ['color' => ['rgb' => 'FFFFFF'], 'bold' => true],
+              'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
+                'vertical' => Alignment::VERTICAL_CENTER
+            ]
           ]);
     $row++;
 
@@ -310,11 +314,18 @@ $sheet->getStyle("I{$epitomeStartRow}:J{$epitomeEndRow}")->applyFromArray([
 $sheet->getStyle("J{$epitomeStartRow}:J{$epitomeEndRow}")->getNumberFormat()->setFormatCode('$#,##0.00');
 $sheet->getStyle("K{$epitomeStartRow}:K{$epitomeEndRow}")->getNumberFormat()->setFormatCode('0.00%');
 
-// Ajustar anchos de columnas
-$sheet->getColumnDimension('I')->setWidth(30); // Nombre de sección
-$sheet->getColumnDimension('J')->setWidth(15); // Subtotal
-$sheet->getColumnDimension('K')->setWidth(15); // Porcentaje
-$sheet->getColumnDimension('L')->setWidth(15); // Reserva (si es necesario)
+// ... (después de generar el epítome)
+
+// Definir anchos personalizados
+$sheet->getColumnDimension('C')->setWidth(15);  // Código
+$sheet->getColumnDimension('D')->setWidth(30);  // Descripción (parte izquierda)
+$sheet->getColumnDimension('E')->setWidth(20);  // Descripción (centro)
+$sheet->getColumnDimension('F')->setWidth(20);  // Descripción (derecha)
+$sheet->getColumnDimension('G')->setWidth(10);  // Unidad
+$sheet->getColumnDimension('H')->setWidth(15);  // Cantidad
+$sheet->getColumnDimension('I')->setWidth(30);  // No. Piezas
+$sheet->getColumnDimension('J')->setWidth(25);  // Tarifa
+$sheet->getColumnDimension('K')->setWidth(20);  // Subtotal
 
 // ================== CONFIGURACIÓN FINAL ==================
 $lastRow = $sheet->getHighestRow();
@@ -323,9 +334,6 @@ $sheet->getStyle("J15:K{$lastRow}")->getNumberFormat()->setFormatCode('$#,##0.00
 $sheet->getProtection()->setSheet(true);
 $sheet->getStyle('C15:J'.($lastRow - 1))->getProtection()->setLocked(false);
 
-foreach (range('C', 'K') as $col) {
-    $sheet->getColumnDimension($col)->setAutoSize(true);
-}
 
 // ================== EXPORTAR ARCHIVO ==================
 $writer = new Xlsx($spreadsheet);

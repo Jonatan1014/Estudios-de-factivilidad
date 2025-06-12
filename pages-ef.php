@@ -1,13 +1,12 @@
 <?php
-session_start(); // Iniciar la sesión
+    session_start(); // Iniciar la sesión
 
-// Verificar si el usuario ha iniciado sesión
-if (!isset($_SESSION['email'])) {
-    // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
-    header('Location: pages-login.php');
-    exit();
-}
-
+    // Verificar si el usuario ha iniciado sesión
+    if (! isset($_SESSION['email'])) {
+        // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
+        header('Location: pages-login.php');
+        exit();
+    }
 
 ?>
 
@@ -46,12 +45,12 @@ if (!isset($_SESSION['email'])) {
 
 
         <!-- ========== Topbar Start ========== -->
-        <?php include("includes/navbar.php")        ?>
+        <?php include "includes/navbar.php"?>
         <!-- ========== Topbar End ========== -->
 
 
         <!-- ========== Left Sidebar Start ========== -->
-        <?php include("includes/sidebar.php")        ?>
+        <?php include "includes/sidebar.php"?>
         <!-- ========== Left Sidebar End ========== -->
 
         <!-- ============================================================== -->
@@ -74,24 +73,136 @@ if (!isset($_SESSION['email'])) {
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <!-- <li class="breadcrumb-item"><a href="#">Hyper</a></li> -->
-                                        <li class="breadcrumb-item active">Dashboard</li>
+                                        <li class="breadcrumb-item active">Estudios de Factibilidad</li>
                                     </ol>
                                 </div>
-                                <h4 class="page-title">Dashboard</h4>
+                                <a href="javascript:history.back()" class="page-title">
+                                    <i class="uil-corner-up-left"></i>
+                                    <span> Regresar </span>
+                                </a>
                             </div>
                         </div>
                     </div>
                     <!-- end page title -->
 
-                 
+                    <div class="app-filters mb-4">
+                        <form id="filtersForm">
+                            <!-- Filtros -->
+                            <div class="row g-3">
+                                <div class="col-md-6 col-lg-4">
+                                    <label>Año</label>
+                                    <select name="anio" class="form-control">
+                                        <option value="">Todos los años</option>
+                                        <?php
+                                            $currentYear = date('Y');
+                                            for ($year = $currentYear; $year >= 2020; $year--) {
+                                                echo "<option value='$year'>$year</option>";
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
 
-                  
+                                <div class="col-md-6 col-lg-4">
+                                    <label>Rango de Fechas</label>
+                                    <div class="input-group">
+                                        <input type="date" name="fecha_inicio" class="form-control">
+                                        <span class="input-group-text">a</span>
+                                        <input type="date" name="fecha_fin" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-lg-4">
+                                    <label>Código de Proyecto</label>
+                                    <input type="text" name="codigo_proyecto" class="form-control">
+                                </div>
+
+                                <div class="col-md-6 col-lg-4">
+                                    <label>Cliente</label>
+                                    <input type="text" name="cliente" class="form-control">
+                                </div>
+
+                                <div class="col-md-6 col-lg-4">
+                                    <label>Alcance</label>
+                                    <input type="text" name="alcance" class="form-control">
+                                </div>
+
+
+                                <div class="col-12">
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-between align-items-center">
+                                        <div class="contador-estudios">
+                                            <span class="badge bg-success fs-5" id="contadorEstudios">
+                                                <i class="mdi mdi-file-document-multiple"></i>
+                                                <span id="numeroEstudios">0</span> estudios encontrados
+                                            </span>
+                                        </div>
+                                        <button type="button" class="btn btn-secondary" onclick="limpiarFiltros()">
+                                            <i class="mdi mdi-broom"></i> Limpiar Filtros
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <div id="resultados" class="row"></div>
 
                 </div> <!-- container -->
             </div> <!-- content -->
 
             <!-- Footer -->
-            <?php include("includes/footer.php"); ?>
+            <?php include "includes/footer.php"; ?>
+        </div>
+        <!-- Modal de Previsualización -->
+        <div class="modal fade" id="modalPreview" tabindex="-1" aria-labelledby="modalPreviewLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title" id="modalPreviewLabel">
+                            <i class="mdi mdi-magnify"></i> Previsualización del Estudio
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="text-muted small">Código del Estudio</label>
+                                <p class="mb-0 fw-bold" id="preview-codigo"></p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="text-muted small">Fecha</label>
+                                <p class="mb-0 fw-bold" id="preview-fecha"></p>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="text-muted small">Cliente</label>
+                                <p class="mb-0 fw-bold" id="preview-cliente"></p>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="text-muted small">Alcance</label>
+                                <p class="mb-0" id="preview-alcance"></p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="text-muted small">Dimensiones</label>
+                                <p class="mb-0" id="preview-dimensiones"></p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="text-muted small">Tipo</label>
+                                <p class="mb-0" id="preview-tipo"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <form id="preview-form" action="details-book.php" method="POST" style="display: inline;">
+                            <input type="hidden" name="id_estudio" id="preview-id">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="mdi mdi-eye"></i> Ver Detalles Completos
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
@@ -951,8 +1062,143 @@ if (!isset($_SESSION['email'])) {
     <!-- App js -->
     <script src="assets/js/app.min.js"></script>
 
+     <script>
+    let currentFilters = {};
+    let currentPage = 1;
 
+    $(document).ready(function() {
+        function cargarLibros(pagina = 1) {
+            // Obtener valores de los filtros
+            currentFilters = {
+                fecha_inicio: $('input[name="fecha_inicio"]').val(),
+                fecha_fin: $('input[name="fecha_fin"]').val(),
+                anio: $('select[name="anio"]').val(),
+                codigo_proyecto: $('input[name="codigo_proyecto"]').val(),
+                cliente: $('input[name="cliente"]').val(),
+                alcance: $('input[name="alcance"]').val(),
+                dimensiones: $('input[name="dimensiones"]').val(),
+                tipo: $('input[name="tipo"]').val(),
+                pagina: pagina
+            };
 
+            currentPage = pagina;
+
+            // Mostrar indicador de carga
+            $('#resultados').html('<div class="col-12 text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando...</span></div></div>');
+
+            $.ajax({
+                url: 'action/search_book.php',
+                type: 'POST',
+                data: currentFilters,
+                dataType: 'json',
+                success: function(response) {
+                    // Actualizar el contador
+                    $('#numeroEstudios').text(response.count);
+                    
+                    // Actualizar los resultados
+                    $('#resultados').html(response.html);
+                    
+                    // Animar el contador cuando cambia
+                    $('#contadorEstudios').addClass('animate__animated animate__pulse');
+                    setTimeout(function() {
+                        $('#contadorEstudios').removeClass('animate__animated animate__pulse');
+                    }, 1000);
+                },
+                error: function() {
+                    $('#resultados').html(
+                        '<div class="col-12"><div class="alert alert-danger">Error al realizar la búsqueda.</div></div>'
+                    );
+                    $('#numeroEstudios').text('0');
+                }
+            });
+        }
+
+        // Función para cambiar de página
+        window.cambiarPagina = function(pagina) {
+            cargarLibros(pagina);
+            // Hacer scroll suave hacia arriba de la tabla
+            $('html, body').animate({
+                scrollTop: $('#resultados').offset().top - 100
+            }, 500);
+        }
+
+        // Función para limpiar filtros
+        window.limpiarFiltros = function() {
+            // Limpiar todos los campos del formulario
+            $('#filtersForm input').each(function() {
+                $(this).val('');
+            });
+            
+            // Limpiar el select de año
+            $('#filtersForm select[name="anio"]').val('');
+
+            // Resetear a la primera página y cargar datos
+            currentPage = 1;
+            cargarLibros(1);
+        }
+
+        // Función para previsualizar
+        window.previsualizar = function(id) {
+            // Obtener los datos del template
+            const dataScript = document.getElementById('data-' + id);
+            if (dataScript) {
+                const data = JSON.parse(dataScript.textContent);
+                
+                // Llenar el modal
+                $('#preview-codigo').text(data.codigo);
+                $('#preview-fecha').text(data.fecha);
+                $('#preview-cliente').text(data.cliente);
+                $('#preview-alcance').text(data.alcance);
+                $('#preview-dimensiones').text(data.dimensiones || 'No especificado');
+                $('#preview-tipo').text(data.tipo || 'No especificado');
+                $('#preview-id').val(id);
+                
+                // Mostrar el modal
+                const modal = new bootstrap.Modal(document.getElementById('modalPreview'));
+                modal.show();
+            }
+        }
+
+        // Función para exportar a Excel
+        window.exportarExcel = function() {
+            // Construir URL con los filtros actuales
+            let params = new URLSearchParams(currentFilters);
+            params.append('export', 'excel');
+            
+            // Abrir en nueva ventana para descargar
+            window.open('action/search_book.php?' + params.toString(), '_blank');
+        }
+
+        // Cargar datos iniciales
+        cargarLibros(1);
+
+        // Eventos que disparan la búsqueda (resetean a página 1)
+        $('#filtersForm input').on('keyup change', function() {
+            cargarLibros(1);
+        });
+        
+        // Evento para el select de año
+        $('#filtersForm select').on('change', function() {
+            cargarLibros(1);
+        });
+        
+        // Lógica especial para el filtro de año y fechas
+        $('select[name="anio"]').on('change', function() {
+            if ($(this).val()) {
+                // Si se selecciona un año, limpiar el rango de fechas
+                $('input[name="fecha_inicio"]').val('');
+                $('input[name="fecha_fin"]').val('');
+            }
+        });
+        
+        $('input[name="fecha_inicio"], input[name="fecha_fin"]').on('change', function() {
+            if ($(this).val()) {
+                // Si se selecciona un rango de fechas, limpiar el año
+                $('select[name="anio"]').val('');
+            }
+        });
+    });
+    </script>
 </body>
 
 

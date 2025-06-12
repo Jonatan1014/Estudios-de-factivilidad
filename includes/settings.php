@@ -6,6 +6,6 @@
         define('DB_USER', 'root');
     }
     if (!defined('DB_PASS')) {
-        define('DB_PASS', '');
+        define('DB_PASS', 'Balon100.');
     }
 ?>

@@ -54,6 +54,12 @@ $usuario = $usuario->datosUser_email($_SESSION['email']);
             </button>
 
             <!-- Topbar Search Form -->
+            
+             <div>
+
+                    <h3 style="color:turquoise">SISTEMA HISTORICO DE CONSULTAS</h3>
+                </div>
+            
 
         </div>
 

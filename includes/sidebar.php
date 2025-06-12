@@ -21,7 +21,7 @@ $usuario = $usuario->datosUser_email($_SESSION['email']);
     <!-- Brand Logo Light -->
     <a href="index.php" class="logo logo-light">
         <span class="logo-lg">
-            <img src="assets/images/logo-dark.png" alt="logo" width="80%" height="80%" >
+            <img src="assets/images/logo-dark.png" alt="logo" width="80%" height="80%">
         </span>
         <span class="logo-sm">
             <img src="assets/images/logo-sm.png" alt="small logo">
@@ -31,7 +31,7 @@ $usuario = $usuario->datosUser_email($_SESSION['email']);
     <!-- Brand Logo Dark -->
     <a href="index.php" class="logo logo-dark">
         <span class="logo-lg">
-            <img src="assets/images/logo-dark.png" alt="dark logo" width="80%" height="80%" >
+            <img src="assets/images/logo-dark.png" alt="dark logo" width="80%" height="80%">
         </span>
         <span class="logo-sm">
             <img src="assets/images/logo-dark-sm.png" alt="small logo">
@@ -62,7 +62,13 @@ $usuario = $usuario->datosUser_email($_SESSION['email']);
         <!--- Sidemenu -->
         <ul class="side-nav">
 
-            <li class="side-nav-title">Navigation</li>
+            <li class="side-nav-title">Navegacion</li>
+            <li class="side-nav-item">
+                <a href="index.php" class="side-nav-link">
+                    <i class="uil-home-alt"></i>
+                    <span> Inicio </span>
+                </a>
+            </li>
 
 
 
@@ -82,7 +88,7 @@ $usuario = $usuario->datosUser_email($_SESSION['email']);
                 <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false"
                     aria-controls="sidebarEcommerce" class="side-nav-link collapsed">
                     <i class="uil-folder-plus"></i>
-                    <span> Archivos</span>
+                    <span> Estudios Factibilidad</span>
                     <span class="menu-arrow"></span>
                 </a>
                 <div class="collapse" id="sidebarEcommerce" style="">
@@ -92,9 +98,26 @@ $usuario = $usuario->datosUser_email($_SESSION['email']);
                             <a href="form-fileuploads.php">Subir Estudio F.</a>
                         </li>
                         <li>
-                            <a href="table-data.php">Listar Estudios F.</a>
+                            <a href="pages-ef.php">Listar Estudios F.</a>
                         </li>
 
+
+                    </ul>
+                </div>
+            </li>
+            <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarProjects" aria-expanded="false"
+                    aria-controls="sidebarProjects" class="side-nav-link collapsed">
+                    <i class="  uil-cloud-computing"></i>
+                    <span> SCP </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarProjects" style="">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="pages-scp.php">Materiales SCP</a>
+                        </li>
+                        
                     </ul>
                 </div>
             </li>
@@ -154,5 +177,3 @@ $usuario = $usuario->datosUser_email($_SESSION['email']);
     </div>
 </div>
 <!-- ========== Left Sidebar End ========== -->
-
-

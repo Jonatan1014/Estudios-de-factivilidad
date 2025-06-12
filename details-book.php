@@ -1,30 +1,29 @@
 <?php
-session_start(); // Iniciar la sesión
+    session_start(); // Iniciar la sesión
 
-// Verificar si el usuario ha iniciado sesión
-if (!isset($_SESSION['email'])) {
-    // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
-    header('Location: login.php');
-    exit();
-}
+    // Verificar si el usuario ha iniciado sesión
+    if (! isset($_SESSION['email'])) {
+        // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
+        header('Location: login.php');
+        exit();
+    }
 
-require('includes/Class-user.php'); // Asegúrate de incluir la clase correcta
-$usuario = new Usuario();
-$usuario = $usuario->datosUser_email($_SESSION['email']); // Obtener los datos de los libros
-if ($usuario["rol"]!="admin" && $usuario["rol"]!="root") {
-    header('Location: index.php');
-    exit();
+    require 'includes/Class-user.php'; // Asegúrate de incluir la clase correcta
+    $usuario = new Usuario();
+    $usuario = $usuario->datosUser_email($_SESSION['email']); // Obtener los datos de los libros
+    if ($usuario["rol"] != "admin" && $usuario["rol"] != "root") {
+        header('Location: index.php');
+        exit();
 
-}
+    }
 
-if (empty($_POST['id_estudio'])){
-    header('Location: index.php');
-    exit();
-} 
-require('includes/Class-data.php');
-$libro = new Data();
-$datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de un libro específico
-
+    if (empty($_POST['id_estudio'])) {
+        header('Location: index.php');
+        exit();
+    }
+    require 'includes/Class-data.php';
+    $libro = new Data();
+    $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de un libro específico
 
 ?>
 
@@ -60,12 +59,12 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
 
 
         <!-- ========== Topbar Start ========== -->
-        <?php include("includes/navbar.php")        ?>
+        <?php include "includes/navbar.php"?>
         <!-- ========== Topbar End ========== -->
 
 
         <!-- ========== Left Sidebar Start ========== -->
-        <?php include("includes/sidebar.php")        ?>
+        <?php include "includes/sidebar.php"?>
         <!-- ========== Left Sidebar End ========== -->
 
         <!-- ============================================================== -->
@@ -85,10 +84,14 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                                        <li class="breadcrumb-item active">Detalles Estudio de Factivilidad</li>
+                                        <li class="breadcrumb-item active">Detalles Estudio de Factibilidad</li>
+                                        <li class="breadcrumb-item active"><?php echo $datos['codigo_estudio'] ?></li>
                                     </ol>
                                 </div>
-                                <h4 class="page-title">Detalles Estudio de Factivilidad</h4>
+                                <a href="javascript:history.back()" class="page-title">
+                                    <i class="uil-corner-up-left"></i>
+                                    <span> Regresar </span>
+                                </a>
                             </div>
                             <ul class="nav nav-tabs mb-3">
                                 <li class="nav-item">
@@ -102,7 +105,7 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
                                 <li class="nav-item">
                                     <a href="#settings" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
                                         <i class="mdi mdi-file-download-outline d-md-none d-block"></i>
-                                        <span class="d-none d-md-block">Exportar Estudio de Factivilidad</span>
+                                        <span class="d-none d-md-block">Exportar Estudio de Factibilidad</span>
                                     </a>
                                 </li>
                             </ul>
@@ -130,43 +133,44 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
                                                         <!-- First Column -->
                                                         <div class="col-md-6">
                                                             <h5 class="mt-1 mb-1">Cliente:</h5>
-                                                            <h7 class="text-muted"><?php echo $datos['cliente']?></h7>
+                                                            <h7 class="text-muted"><?php echo $datos['cliente'] ?></h7>
 
 
                                                             <h5 class="mb-1">Alcance:</h5>
-                                                            <h7 class="text-muted"><?php echo $datos['alcance']?></h7>
+                                                            <h7 class="text-muted"><?php echo $datos['alcance'] ?></h7>
 
 
                                                             <h5 class="mb-1">Dimensiones:</h5>
-                                                            <h7 class="text-muted"><?php echo $datos['dimensiones']?>
+                                                            <h7 class="text-muted"><?php echo $datos['dimensiones'] ?>
                                                             </h7>
 
                                                             <h5 class="mb-1">Cantidad:</h5>
-                                                            <h7 class="text-muted"><?php echo $datos['cantidad']?>
+                                                            <h7 class="text-muted"><?php echo $datos['cantidad'] ?>
                                                             </h7>
                                                         </div>
 
                                                         <!-- Second Column -->
                                                         <div class="col-md-6">
                                                             <h5 class="mt-1 mb-1">Fecha:</h5>
-                                                            <h7 class="text-muted"><?php echo $datos['fecha_estudio']?>
+                                                            <h7 class="text-muted"><?php echo $datos['fecha_estudio'] ?>
                                                             </h7>
 
                                                             <h5 class="mb-1">Cotizacion:</h5>
-                                                            <h7 class="text-muted"><?php echo $datos['cotizacion']?>
+                                                            <h7 class="text-muted"><?php echo $datos['cotizacion'] ?>
                                                             </h7>
 
 
                                                             <h5 class="mb-1">Tipo:</h5>
-                                                            <h7 class="text-muted"><?php echo $datos['tipo']?></h7>
+                                                            <h7 class="text-muted"><?php echo $datos['tipo'] ?></h7>
 
                                                             <h5 class="mb-1">Cod. Fabricacion:</h5>
                                                             <h7 class="text-muted">
-                                                                <?php echo $datos['cod_fabricacion']?>
+                                                                <?php echo $datos['cod_fabricacion'] ?>
                                                             </h7>
 
                                                             <h5 class="mb-1">Doc. Referencia:</h5>
-                                                            <h7 class="text-muted"><?php echo $datos['doc_referencia']?>
+                                                            <h7 class="text-muted">
+                                                                <?php echo $datos['doc_referencia'] ?>
                                                             </h7>
 
 
@@ -246,33 +250,33 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php 
-            $seccionMateriales = array_filter($datos['secciones'], function($seccion) {
-                return strtoupper($seccion['nombre']) === '1. MATERIALES';
-            });
-            
-            if (!empty($seccionMateriales)) {
-                $materiales = reset($seccionMateriales)['items'];
-                foreach ($materiales as $item) {
-            ?>
-                                                    <tr data-cantidad="<?= $item['cantidad'] ?>"
-                                                        data-piezas="<?= $item['no_piezas'] ?>"
-                                                        data-tarifa="<?= $item['tarifa'] ?>">
-                                                        <td><?= htmlspecialchars($item['codigo_item']) ?></td>
-                                                        <td><?= htmlspecialchars($item['descripcion']) ?></td>
-                                                        <td><?= htmlspecialchars($item['unidad']) ?></td>
-                                                        <td><?= htmlspecialchars($item['cantidad']) ?></td>
-                                                        <td><?= htmlspecialchars($item['no_piezas']) ?></td>
-                                                        <td><?= htmlspecialchars($item['tarifa']) ?></td>
+                                                    <?php
+                                                        $seccionMateriales = array_filter($datos['secciones'], function ($seccion) {
+                                                            return strtoupper($seccion['nombre']) === 'MATERIALES';
+                                                        });
+
+                                                        if (! empty($seccionMateriales)) {
+                                                            $materiales = reset($seccionMateriales)['items'];
+                                                            foreach ($materiales as $item) {
+                                                            ?>
+                                                    <tr data-cantidad="<?php echo $item['cantidad']?>"
+                                                        data-piezas="<?php echo $item['no_piezas']?>"
+                                                        data-tarifa="<?php echo $item['tarifa']?>">
+                                                        <td><?php echo htmlspecialchars($item['codigo_item'])?></td>
+                                                        <td><?php echo htmlspecialchars($item['descripcion'])?></td>
+                                                        <td><?php echo htmlspecialchars($item['unidad'])?></td>
+                                                        <td><?php echo htmlspecialchars($item['cantidad'])?></td>
+                                                        <td><?php echo htmlspecialchars($item['no_piezas'])?></td>
+                                                        <td><?php echo htmlspecialchars($item['tarifa'])?></td>
                                                         <td class="subtotal"></td>
 
                                                     </tr>
-                                                    <?php 
-                }
-            } else {
-                echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
-            }
-            ?>
+                                                    <?php
+                                                        }
+                                                        } else {
+                                                            echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
+                                                        }
+                                                    ?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -298,33 +302,33 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php 
-            $seccionMateriales = array_filter($datos['secciones'], function($seccion) {
-                return strtoupper($seccion['nombre']) === '2. INGENIERIA';
-            });
-            
-            if (!empty($seccionMateriales)) {
-                $materiales = reset($seccionMateriales)['items'];
-                foreach ($materiales as $item) {
-            ?>
-                                                    <tr data-cantidad="<?= $item['cantidad'] ?>"
-                                                        data-piezas="<?= $item['no_piezas'] ?>"
-                                                        data-tarifa="<?= $item['tarifa'] ?>">
-                                                        <td><?= htmlspecialchars($item['codigo_item']) ?></td>
-                                                        <td><?= htmlspecialchars($item['descripcion']) ?></td>
-                                                        <td><?= htmlspecialchars($item['unidad']) ?></td>
-                                                        <td><?= htmlspecialchars($item['cantidad']) ?></td>
-                                                        <td><?= htmlspecialchars($item['no_piezas']) ?></td>
-                                                        <td><?= htmlspecialchars($item['tarifa']) ?></td>
+                                                    <?php
+                                                        $seccionMateriales = array_filter($datos['secciones'], function ($seccion) {
+                                                            return strtoupper($seccion['nombre']) === 'INGENIERIA';
+                                                        });
+
+                                                        if (! empty($seccionMateriales)) {
+                                                            $materiales = reset($seccionMateriales)['items'];
+                                                            foreach ($materiales as $item) {
+                                                            ?>
+                                                    <tr data-cantidad="<?php echo $item['cantidad']?>"
+                                                        data-piezas="<?php echo $item['no_piezas']?>"
+                                                        data-tarifa="<?php echo $item['tarifa']?>">
+                                                        <td><?php echo htmlspecialchars($item['codigo_item'])?></td>
+                                                        <td><?php echo htmlspecialchars($item['descripcion'])?></td>
+                                                        <td><?php echo htmlspecialchars($item['unidad'])?></td>
+                                                        <td><?php echo htmlspecialchars($item['cantidad'])?></td>
+                                                        <td><?php echo htmlspecialchars($item['no_piezas'])?></td>
+                                                        <td><?php echo htmlspecialchars($item['tarifa'])?></td>
                                                         <td class="subtotal"></td>
 
                                                     </tr>
-                                                    <?php 
-                }
-            } else {
-                echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
-            }
-            ?>
+                                                    <?php
+                                                        }
+                                                        } else {
+                                                            echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
+                                                        }
+                                                    ?>
                                                 </tbody>
                                             </table>
 
@@ -349,33 +353,33 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php 
-            $seccionMateriales = array_filter($datos['secciones'], function($seccion) {
-                return strtoupper($seccion['nombre']) === '3. PRUEBAS NO DESTRUCTIVAS';
-            });
-            
-            if (!empty($seccionMateriales)) {
-                $materiales = reset($seccionMateriales)['items'];
-                foreach ($materiales as $item) {
-            ?>
-                                                <tr data-cantidad="<?= $item['cantidad'] ?>"
-                                                    data-piezas="<?= $item['no_piezas'] ?>"
-                                                    data-tarifa="<?= $item['tarifa'] ?>">
-                                                    <td><?= htmlspecialchars($item['codigo_item']) ?></td>
-                                                    <td><?= htmlspecialchars($item['descripcion']) ?></td>
-                                                    <td><?= htmlspecialchars($item['unidad']) ?></td>
-                                                    <td><?= htmlspecialchars($item['cantidad']) ?></td>
-                                                    <td><?= htmlspecialchars($item['no_piezas']) ?></td>
-                                                    <td><?= htmlspecialchars($item['tarifa']) ?></td>
+                                                <?php
+                                                    $seccionMateriales = array_filter($datos['secciones'], function ($seccion) {
+                                                        return strtoupper($seccion['nombre']) === 'PRUEBAS NO DESTRUCTIVAS INGENIERIA';
+                                                    });
+
+                                                    if (! empty($seccionMateriales)) {
+                                                        $materiales = reset($seccionMateriales)['items'];
+                                                        foreach ($materiales as $item) {
+                                                        ?>
+                                                <tr data-cantidad="<?php echo $item['cantidad']?>"
+                                                    data-piezas="<?php echo $item['no_piezas']?>"
+                                                    data-tarifa="<?php echo $item['tarifa']?>">
+                                                    <td><?php echo htmlspecialchars($item['codigo_item'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['descripcion'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['unidad'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['cantidad'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['no_piezas'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['tarifa'])?></td>
                                                     <td class="subtotal"></td>
 
                                                 </tr>
-                                                <?php 
-                }
-            } else {
-                echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
-            }
-            ?>
+                                                <?php
+                                                    }
+                                                    } else {
+                                                        echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
+                                                    }
+                                                ?>
                                             </tbody>
                                         </table>
 
@@ -398,33 +402,33 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php 
-            $seccionMateriales = array_filter($datos['secciones'], function($seccion) {
-                return strtoupper($seccion['nombre']) === '4. CONSUMIBLES';
-            });
-            
-            if (!empty($seccionMateriales)) {
-                $materiales = reset($seccionMateriales)['items'];
-                foreach ($materiales as $item) {
-            ?>
-                                                <tr data-cantidad="<?= $item['cantidad'] ?>"
-                                                    data-piezas="<?= $item['no_piezas'] ?>"
-                                                    data-tarifa="<?= $item['tarifa'] ?>">
-                                                    <td><?= htmlspecialchars($item['codigo_item']) ?></td>
-                                                    <td><?= htmlspecialchars($item['descripcion']) ?></td>
-                                                    <td><?= htmlspecialchars($item['unidad']) ?></td>
-                                                    <td><?= htmlspecialchars($item['cantidad']) ?></td>
-                                                    <td><?= htmlspecialchars($item['no_piezas']) ?></td>
-                                                    <td><?= htmlspecialchars($item['tarifa']) ?></td>
+                                                <?php
+                                                    $seccionMateriales = array_filter($datos['secciones'], function ($seccion) {
+                                                        return strtoupper($seccion['nombre']) === 'CONSUMIBLES INGENIERIA';
+                                                    });
+
+                                                    if (! empty($seccionMateriales)) {
+                                                        $materiales = reset($seccionMateriales)['items'];
+                                                        foreach ($materiales as $item) {
+                                                        ?>
+                                                <tr data-cantidad="<?php echo $item['cantidad']?>"
+                                                    data-piezas="<?php echo $item['no_piezas']?>"
+                                                    data-tarifa="<?php echo $item['tarifa']?>">
+                                                    <td><?php echo htmlspecialchars($item['codigo_item'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['descripcion'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['unidad'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['cantidad'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['no_piezas'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['tarifa'])?></td>
                                                     <td class="subtotal"></td>
 
                                                 </tr>
-                                                <?php 
-                }
-            } else {
-                echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
-            }
-            ?>
+                                                <?php
+                                                    }
+                                                    } else {
+                                                        echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
+                                                    }
+                                                ?>
                                             </tbody>
                                         </table>
 
@@ -447,33 +451,33 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php 
-            $seccionMateriales = array_filter($datos['secciones'], function($seccion) {
-                return strtoupper($seccion['nombre']) === '5. TRANSPORTE';
-            });
-            
-            if (!empty($seccionMateriales)) {
-                $materiales = reset($seccionMateriales)['items'];
-                foreach ($materiales as $item) {
-            ?>
-                                                <tr data-cantidad="<?= $item['cantidad'] ?>"
-                                                    data-piezas="<?= $item['no_piezas'] ?>"
-                                                    data-tarifa="<?= $item['tarifa'] ?>">
-                                                    <td><?= htmlspecialchars($item['codigo_item']) ?></td>
-                                                    <td><?= htmlspecialchars($item['descripcion']) ?></td>
-                                                    <td><?= htmlspecialchars($item['unidad']) ?></td>
-                                                    <td><?= htmlspecialchars($item['cantidad']) ?></td>
-                                                    <td><?= htmlspecialchars($item['no_piezas']) ?></td>
-                                                    <td><?= htmlspecialchars($item['tarifa']) ?></td>
+                                                <?php
+                                                    $seccionMateriales = array_filter($datos['secciones'], function ($seccion) {
+                                                        return strtoupper($seccion['nombre']) === 'TRANSPORTE PINTURA';
+                                                    });
+
+                                                    if (! empty($seccionMateriales)) {
+                                                        $materiales = reset($seccionMateriales)['items'];
+                                                        foreach ($materiales as $item) {
+                                                        ?>
+                                                <tr data-cantidad="<?php echo $item['cantidad']?>"
+                                                    data-piezas="<?php echo $item['no_piezas']?>"
+                                                    data-tarifa="<?php echo $item['tarifa']?>">
+                                                    <td><?php echo htmlspecialchars($item['codigo_item'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['descripcion'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['unidad'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['cantidad'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['no_piezas'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['tarifa'])?></td>
                                                     <td class="subtotal"></td>
 
                                                 </tr>
-                                                <?php 
-                }
-            } else {
-                echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
-            }
-            ?>
+                                                <?php
+                                                    }
+                                                    } else {
+                                                        echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
+                                                    }
+                                                ?>
                                             </tbody>
                                         </table>
 
@@ -496,33 +500,33 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php 
-            $seccionMateriales = array_filter($datos['secciones'], function($seccion) {
-                return strtoupper($seccion['nombre']) === '6. MANO DE OBRA';
-            });
-            
-            if (!empty($seccionMateriales)) {
-                $materiales = reset($seccionMateriales)['items'];
-                foreach ($materiales as $item) {
-            ?>
-                                                <tr data-cantidad="<?= $item['cantidad'] ?>"
-                                                    data-piezas="<?= $item['no_piezas'] ?>"
-                                                    data-tarifa="<?= $item['tarifa'] ?>">
-                                                    <td><?= htmlspecialchars($item['codigo_item']) ?></td>
-                                                    <td><?= htmlspecialchars($item['descripcion']) ?></td>
-                                                    <td><?= htmlspecialchars($item['unidad']) ?></td>
-                                                    <td><?= htmlspecialchars($item['cantidad']) ?></td>
-                                                    <td><?= htmlspecialchars($item['no_piezas']) ?></td>
-                                                    <td><?= htmlspecialchars($item['tarifa']) ?></td>
+                                                <?php
+                                                    $seccionMateriales = array_filter($datos['secciones'], function ($seccion) {
+                                                        return strtoupper($seccion['nombre']) === 'MANO DE OBRA';
+                                                    });
+
+                                                    if (! empty($seccionMateriales)) {
+                                                        $materiales = reset($seccionMateriales)['items'];
+                                                        foreach ($materiales as $item) {
+                                                        ?>
+                                                <tr data-cantidad="<?php echo $item['cantidad']?>"
+                                                    data-piezas="<?php echo $item['no_piezas']?>"
+                                                    data-tarifa="<?php echo $item['tarifa']?>">
+                                                    <td><?php echo htmlspecialchars($item['codigo_item'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['descripcion'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['unidad'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['cantidad'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['no_piezas'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['tarifa'])?></td>
                                                     <td class="subtotal"></td>
 
                                                 </tr>
-                                                <?php 
-                }
-            } else {
-                echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
-            }
-            ?>
+                                                <?php
+                                                    }
+                                                    } else {
+                                                        echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
+                                                    }
+                                                ?>
                                             </tbody>
                                         </table>
 
@@ -545,33 +549,33 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php 
-            $seccionMateriales = array_filter($datos['secciones'], function($seccion) {
-                return strtoupper($seccion['nombre']) === '7. PRUEBA HIDROSTATICA';
-            });
-            
-            if (!empty($seccionMateriales)) {
-                $materiales = reset($seccionMateriales)['items'];
-                foreach ($materiales as $item) {
-            ?>
-                                                <tr data-cantidad="<?= $item['cantidad'] ?>"
-                                                    data-piezas="<?= $item['no_piezas'] ?>"
-                                                    data-tarifa="<?= $item['tarifa'] ?>">
-                                                    <td><?= htmlspecialchars($item['codigo_item']) ?></td>
-                                                    <td><?= htmlspecialchars($item['descripcion']) ?></td>
-                                                    <td><?= htmlspecialchars($item['unidad']) ?></td>
-                                                    <td><?= htmlspecialchars($item['cantidad']) ?></td>
-                                                    <td><?= htmlspecialchars($item['no_piezas']) ?></td>
-                                                    <td><?= htmlspecialchars($item['tarifa']) ?></td>
+                                                <?php
+                                                    $seccionMateriales = array_filter($datos['secciones'], function ($seccion) {
+                                                        return strtoupper($seccion['nombre']) === 'PRUEBA HIDROSTATICA';
+                                                    });
+
+                                                    if (! empty($seccionMateriales)) {
+                                                        $materiales = reset($seccionMateriales)['items'];
+                                                        foreach ($materiales as $item) {
+                                                        ?>
+                                                <tr data-cantidad="<?php echo $item['cantidad']?>"
+                                                    data-piezas="<?php echo $item['no_piezas']?>"
+                                                    data-tarifa="<?php echo $item['tarifa']?>">
+                                                    <td><?php echo htmlspecialchars($item['codigo_item'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['descripcion'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['unidad'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['cantidad'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['no_piezas'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['tarifa'])?></td>
                                                     <td class="subtotal"></td>
 
                                                 </tr>
-                                                <?php 
-                }
-            } else {
-                echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
-            }
-            ?>
+                                                <?php
+                                                    }
+                                                    } else {
+                                                        echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
+                                                    }
+                                                ?>
                                             </tbody>
                                         </table>
 
@@ -594,33 +598,33 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php 
-            $seccionMateriales = array_filter($datos['secciones'], function($seccion) {
-                return strtoupper($seccion['nombre']) === '8. PINTURA MANO DE OBRA';
-            });
-            
-            if (!empty($seccionMateriales)) {
-                $materiales = reset($seccionMateriales)['items'];
-                foreach ($materiales as $item) {
-            ?>
-                                                <tr data-cantidad="<?= $item['cantidad'] ?>"
-                                                    data-piezas="<?= $item['no_piezas'] ?>"
-                                                    data-tarifa="<?= $item['tarifa'] ?>">
-                                                    <td><?= htmlspecialchars($item['codigo_item']) ?></td>
-                                                    <td><?= htmlspecialchars($item['descripcion']) ?></td>
-                                                    <td><?= htmlspecialchars($item['unidad']) ?></td>
-                                                    <td><?= htmlspecialchars($item['cantidad']) ?></td>
-                                                    <td><?= htmlspecialchars($item['no_piezas']) ?></td>
-                                                    <td><?= htmlspecialchars($item['tarifa']) ?></td>
+                                                <?php
+                                                    $seccionMateriales = array_filter($datos['secciones'], function ($seccion) {
+                                                        return strtoupper($seccion['nombre']) === 'PINTURA MANO DE OBRA PINTURA';
+                                                    });
+
+                                                    if (! empty($seccionMateriales)) {
+                                                        $materiales = reset($seccionMateriales)['items'];
+                                                        foreach ($materiales as $item) {
+                                                        ?>
+                                                <tr data-cantidad="<?php echo $item['cantidad']?>"
+                                                    data-piezas="<?php echo $item['no_piezas']?>"
+                                                    data-tarifa="<?php echo $item['tarifa']?>">
+                                                    <td><?php echo htmlspecialchars($item['codigo_item'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['descripcion'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['unidad'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['cantidad'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['no_piezas'])?></td>
+                                                    <td><?php echo htmlspecialchars($item['tarifa'])?></td>
                                                     <td class="subtotal"></td>
 
                                                 </tr>
-                                                <?php 
-                }
-            } else {
-                echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
-            }
-            ?>
+                                                <?php
+                                                    }
+                                                    } else {
+                                                        echo '<tr><td colspan="8" class="text-center">No hay materiales registrados</td></tr>';
+                                                    }
+                                                ?>
                                             </tbody>
                                         </table>
 
@@ -683,18 +687,18 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
                                     }
 
                                     // Actualizar IDs de tablas en PHP
-                                    <?php 
-    $seccionesIds = [
-        'materiales' => '1. MATERIALES',
-        'ingenieria' => '2. INGENIERIA',
-        'pruebas' => '3. PRUEBAS NO DESTRUCTIVAS',
-        'consumibles' => '4. CONSUMIBLES',
-        'transporte' => '5. TRANSPORTE',
-        'mano-obra' => '6. MANO DE OBRA',
-        'hidrostatica' => '7. PRUEBA HIDROSTATICA',
-        'pintura' => '8. PINTURA MANO DE OBRA'
-    ];
-    ?>
+                                    <?php
+                                        $seccionesIds = [
+                                            'materiales'   => '1. MATERIALES',
+                                            'ingenieria'   => '2. INGENIERIA',
+                                            'pruebas'      => '3. PRUEBAS NO DESTRUCTIVAS',
+                                            'consumibles'  => '4. CONSUMIBLES',
+                                            'transporte'   => '5. TRANSPORTE',
+                                            'mano-obra'    => '6. MANO DE OBRA',
+                                            'hidrostatica' => '7. PRUEBA HIDROSTATICA',
+                                            'pintura'      => '8. PINTURA MANO DE OBRA',
+                                        ];
+                                    ?>
 
                                     // Inicializar cálculos
                                     calcularTotales();
@@ -768,10 +772,11 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
                                                 <div class="row">
                                                     <div class="mb-3">
                                                         <div class="bg-primary-subtle p-2 " style="text-align: center;">
-                                                            <code class="link-primary">Descargar Estudio de Factivilidad: <?php echo $datos['codigo_estudio']?>.xlsx</code>
+                                                            <code
+                                                                class="link-primary">Descargar Estudio de Factibilidad:                                                                                                                          <?php echo $datos['codigo_estudio'] ?>.xlsx</code>
                                                         </div>
 
-                                                        
+
                                                     </div>
                                                     <!-- Primera columna -->
 
@@ -785,7 +790,7 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
                                                     <div class="mb-3">
 
                                                         <input type="hidden" name="id_estudio"
-                                                            value="<?php echo $datos['id_estudio']?>" id="simpleinput"
+                                                            value="<?php echo $datos['id_estudio'] ?>" id="simpleinput"
                                                             class="form-control" style="text-align: center;">
                                                     </div>
                                                 </div>
@@ -793,7 +798,8 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
                                                 <!-- Botón de envío -->
                                                 <div class="mb-3 text-center">
                                                     <br><br><br>
-                                                    <button type="submit" class="btn btn-soft-primary">Descargar</button>
+                                                    <button type="submit"
+                                                        class="btn btn-soft-primary">Descargar</button>
                                                 </div>
                                         </div>
                                         </form>
@@ -815,7 +821,7 @@ $datos = $libro->listarEF_IDFull($_POST['id_estudio']); // Obtener los datos de 
         </div> <!-- content -->
 
         <!-- Footer -->
-        <?php include("includes/footer.php"); ?>
+        <?php include "includes/footer.php"; ?>
         <!-- end Footer -->
 
     </div>
